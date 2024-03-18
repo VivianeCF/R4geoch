@@ -19,8 +19,8 @@ format:
     preview-links: false
 ---
 
-## Conteúdo do Curso R 
-
+## Conteúdo do Curso R
+::: {.incremental}
 1.  [Introdução](#Introdução)
 
 2.  [Sessão do R no RSTUDIO](#R_RSTUDIO)
@@ -40,29 +40,47 @@ format:
 9.  [Tarefas finais](#tarefas)
 
 10. [Feedback e encerramento](#feed_enc)
+:::
+## Introdução{#Introdução}
 
-## Introdução {#Introdução}
+### Objetivo do Curso
 
--   Objetivo do Curso
--   Cronograma
--   Forma de Aprendizado
--   Fluxo de trabalho
+Preparar os geoquímicos para usar o R em sua rotina de trabalho.
 
+### Forma de Aprendizado
+::: {.incremental}
+- Primeiramente, os participantes terão um período para se familiarizar com o ambiente do RStudio e entender os passos que antecedem a edição dos códigos.\
+- Serão apresentados os principais objetos, operadores e outras funcionalidades do R. Em seguida veremos como funciona o R aplicando nos nossos dados com o uso de funções e pacotes específicos.\
+- No final será apresentado um exemplo de fluxo de trabalho com as principais etapas do processamento dos dados geoquímicos.
+:::
 ## Sessão do R no RSTUDIO {#R_RSTUDIO}
 
--   Importação de dados
--   Exportação de dados
--   Uso de GUI
--   instalações de pacotes
--   Ajuda
--   Código em execução
--   Saída
+###  Importação de dados  
+
+```{r echo=TRUE}
+csv <- read.csv2("data/GQ901225_Lote1515_S.csv")
+head(csv)
+```
+##
+###   Exportação de dados 
+##
+###   Uso de GUI
+##
+###   Instalação de pacotes
+##
+###   Ajuda
+##
+###   Código em execução
+##
+###   Saída
+##
+###   Forma de trabalho no R
 
 ## Objetos do R {#obj_R}
 
 -   Tipos de objetos em R
 
--   Manipulação de objetos 
+-   Manipulação de objetos
 
 ## Condições e Loops {#cond_loop}
 
@@ -94,7 +112,8 @@ format:
 
 -   Combinar dados de campo / análises
 
-## Análise dos dados 
+## Análise dos dados
+
 ### Química {#quimica}
 
 -   Distribuição estatística
@@ -111,14 +130,15 @@ format:
 
 -   Análise de Principais Componentes
 
----
+------------------------------------------------------------------------
 
-## Análise dos dados 
+## Análise dos dados
+
 ### Mineralometria {#mineral}
 
 -   Tabela de frequência
 
--   Lista de minerais (abreviatura) 
+-   Lista de minerais (abreviatura)
 
 ## Visualização dos Dados {#vis_dados}
 
@@ -142,9 +162,10 @@ format:
 -   Projeto final
 
 ## Feedback e encerramento {#feed_enc}
-- Desenvolvimento do pacote digeoqR
-- Suporte da linguagem R
-- Sistema para Automação e Produção
+
+-   Desenvolvimento do pacote digeoqR
+-   Suporte da linguagem R
+-   Sistema para Automação e Produção
 
 ------------------------------------------------------------------------
 
@@ -160,7 +181,8 @@ plot(x, y, main= "Gráfico de Dispersão Exemplo", xlab="Eixo X", ylab="Eixo Y",
 abline(lm(y ~ x), col="red")
 
 ```
---------------------------------------------------------------
+
+------------------------------------------------------------------------
 
 ```{r  echo=FALSE}
 # Criando um gráfico com todos os símbolos
@@ -199,3 +221,4 @@ axis(2, at = c(1,2,3,4,5,6), labels = c("pch" , "col" , "cex" , "lty", "type" , 
      tick = TRUE, col = "black", las = 1, cex.axis = 0.8)
 
 ```
+

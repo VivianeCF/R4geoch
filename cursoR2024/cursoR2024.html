@@ -401,43 +401,112 @@ Viviane C. Ferrari
 </div>
 </div>
 
-  <p class="date">17/03/2024</p>
+  <p class="date">18/03/2024</p>
 </section>
 <section class="slide level2">
-<h2>Conteúdo do Curso</h2>
+<h2>Conteúdo do Curso R</h2>
+<div>
 <ol type="1">
-<li><p><a href="#/Introdução">Introdução</a></p></li>
-<li><p><a href="#/R_RSTUDIO">Sessão do R no RSTUDIO</a></p></li>
-<li><p><a href="#/obj_R">Objetos do R</a></p></li>
-<li><p><a href="#/cond_loop">Condições e Loops</a></p></li>
-<li><p><a href="#/func_pac">Funções e Pacotes</a></p></li>
-<li><p><a href="#/prep_dados">Preparação dos dados</a></p></li>
-<li><p><a href="#/analise">Análise dos dados</a> / <a href="#/quimica">Química</a> / <a href="#/mineral">Mineralometria</a></p></li>
-<li><p><a href="#/vis_dados">Visualização dos dados</a></p></li>
-<li><p><a href="#/tarefas">Tarefas finais</a></p></li>
-<li><p><a href="#/feed_enc">Feedback e encerramento</a></p></li>
+<li class="fragment"><p><a href="#/Introdução">Introdução</a></p></li>
+<li class="fragment"><p><a href="#/R_RSTUDIO">Sessão do R no RSTUDIO</a></p></li>
+<li class="fragment"><p><a href="#/obj_R">Objetos do R</a></p></li>
+<li class="fragment"><p><a href="#/cond_loop">Condições e Loops</a></p></li>
+<li class="fragment"><p><a href="#/func_pac">Funções e Pacotes</a></p></li>
+<li class="fragment"><p><a href="#/prep_dados">Preparação dos dados</a></p></li>
+<li class="fragment"><p><a href="#/analise">Análise dos dados</a> / <a href="#/quimica">Química</a> / <a href="#/mineral">Mineralometria</a></p></li>
+<li class="fragment"><p><a href="#/vis_dados">Visualização dos dados</a></p></li>
+<li class="fragment"><p><a href="#/tarefas">Tarefas finais</a></p></li>
+<li class="fragment"><p><a href="#/feed_enc">Feedback e encerramento</a></p></li>
 </ol>
+</div>
 </section>
 <section id="Introdução" class="slide level2">
 <h2>Introdução</h2>
+<h3>Objetivo do Curso</h3>
+<p>Preparar os geoquímicos para usar o R em sua rotina de trabalho.</p>
+<h3>Forma de Aprendizado</h3>
+<div>
 <ul>
-<li>Objetivo do Curso</li>
-<li>Cronograma</li>
-<li>Forma de Aprendizado</li>
-<li>Fluxo de trabalho</li>
+<li class="fragment">Primeiramente, os participantes terão um período para se familiarizar com o ambiente do RStudio e entender os passos que antecedem a edição dos códigos.<br>
+</li>
+<li class="fragment">Serão apresentados os principais objetos, operadores e outras funcionalidades do R. Em seguida veremos como funciona o R aplicando nos nossos dados com o uso de funções e pacotes específicos.<br>
+</li>
+<li class="fragment">No final será apresentado um exemplo de fluxo de trabalho com as principais etapas do processamento dos dados geoquímicos.</li>
 </ul>
+</div>
 </section>
 <section id="R_RSTUDIO" class="slide level2">
 <h2>Sessão do R no RSTUDIO</h2>
-<ul>
-<li>Importação de dados</li>
-<li>Exportação de dados</li>
-<li>Uso de GUI</li>
-<li>instalações de pacotes</li>
-<li>Ajuda</li>
-<li>Código em execução</li>
-<li>Saída</li>
-</ul>
+<h3>Importação de dados</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>csv <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"data/GQ901225_Lote1515_S.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">head</span>(csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  SGS.del.Peru.S.A.C.                             X X.1 X.2 X.3 X.4 X.5 X.6 X.7
+1             Client: SGS GEOSOL LABORATORIOS LTDA,      NA                    
+2       File Created:                     29/abr/09      NA                    
+3         Job Number:                      GQ901225      NA                    
+4  Number of Samples:                            52      NA                    
+5            Project:                                    NA                    
+6        Shipment ID:                     Lote 1515      NA                    
+  X.8 X.9 X.10 X.11 X.12 X.13 X.14 X.15 X.16 X.17 X.18 X.19 X.20 X.21 X.22 X.23
+1                                                                              
+2                                                                              
+3                                                                              
+4                                                                              
+5                                                                              
+6                                                                              
+  X.24 X.25 X.26 X.27 X.28 X.29 X.30 X.31 X.32 X.33 X.34 X.35 X.36 X.37 X.38
+1                                                                           
+2                                                                           
+3                                                                           
+4                                                                           
+5                                                                           
+6                                                                           
+  X.39 X.40 X.41 X.42 X.43 X.44 X.45 X.46 X.47 X.48 X.49 X.50 X.51 X.52 X.53
+1                                                                           
+2                                                                           
+3                                                                           
+4                                                                           
+5                                                                           
+6                                                                           
+  X.54 X.55 X.56 X.57 X.58 X.59 X.60 X.61 X.62 X.63
+1                                                  
+2                                                  
+3                                                  
+4                                                  
+5                                                  
+6                                                  </code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<h3>Exportação de dados</h3>
+</section>
+<section class="slide level2">
+<h2></h2>
+<h3>Uso de GUI</h3>
+</section>
+<section class="slide level2">
+<h2></h2>
+<h3>Instalação de pacotes</h3>
+</section>
+<section class="slide level2">
+<h2></h2>
+<h3>Ajuda</h3>
+</section>
+<section class="slide level2">
+<h2></h2>
+<h3>Código em execução</h3>
+</section>
+<section class="slide level2">
+<h2></h2>
+<h3>Saída</h3>
+</section>
+<section class="slide level2">
+<h2></h2>
+<h3>Forma de trabalho no R</h3>
 </section>
 <section id="obj_R" class="slide level2">
 <h2>Objetos do R</h2>
@@ -524,23 +593,23 @@ Viviane C. Ferrari
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Definindo os dados para o eixo x e y</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">4</span>)</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Criando o gráfico de dispersão</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">plot</span>(x, y, <span class="at">main=</span> <span class="st">"Gráfico de Dispersão Exemplo"</span>, <span class="at">xlab=</span><span class="st">"Eixo X"</span>, <span class="at">ylab=</span><span class="st">"Eixo Y"</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># Adicionando uma linha de regressão ao gráfico</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">abline</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Definindo os dados para o eixo x e y</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">4</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># Criando o gráfico de dispersão</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="fu">plot</span>(x, y, <span class="at">main=</span> <span class="st">"Gráfico de Dispersão Exemplo"</span>, <span class="at">xlab=</span><span class="st">"Eixo X"</span>, <span class="at">ylab=</span><span class="st">"Eixo Y"</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Adicionando uma linha de regressão ao gráfico</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">abline</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="cursoR2024_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch"></section>
+<img data-src="cursoR2024_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="cursoR2024_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
+<p><img data-src="cursoR2024_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
 </div>
 </div>
 <p><img src="img/logo_digeoqR2.png" class="slide-logo"></p>
