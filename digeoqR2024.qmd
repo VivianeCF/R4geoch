@@ -27,42 +27,53 @@ require(magrittr)
 
 # Etapa I de planejamento de estações
 
--   [Trabalhando com feições espaciais]
--   [Importando a imagem SRTM]
--   [Planejando as estações de coleta]
--   [Mapa das estações planejadas]
--   [Modelagem das bacias e validação das estações planejadas]
--   [Mapa das estações planejadas]
+-   [Trabalhando com feições espaciais](#trabalhando-com-feições-espaciais)
+-   [Importando a imagem SRTM](#importando-a-imagem-srtm)
+-   [Planejando as estações de coleta](#planejando-as-estações-de-coleta)
+-   [Mapa das estações planejadas](#mapa-das-estações-planejadas)
+-   [Modelagem das bacias e validação das estações planejadas](#modelagem-das-bacias-e-validação-das-estações-planejadas)
+-   [Mapa de planejamento validado](#mapa-de-planejamento_validado)
 
-## Trabalhando com feições espaciais
+## Trabalhando com feições espaciais {#trabalhando-com-feições-espaciais}
 
-```{r feiture}
+```{r var1, echo=FALSE}
+rios <- "rios_ibge.shp"
+massa_dagua <- "massa_dagua.shp"
+area_urbana <- "area_urbana.shp"
+limite <- "carta_100M.shp"
+limite_srtm <- "area_srtm.shp"
+dir_in <- "inputs/campo/"
+bacia_minima <- 4
+bacia_maxima <- 25
+snap_dist <- "0.02"
+threshold <- 250
+min_length <- "0.02"
+max_ordem <- 3
+wbt_wd <- "outputs/modelo/"
+EPSG <- 4326
+dir_out <- "outputs/"
+tipo_base <- 1
+base_campo <- "fcampo"
+dir_os <- "inputs/os/" 
+```
 
-rios <- "rios_ibge.shp";  massa_dagua <- "massa_dagua.shp"; 
-area_urbana <- "area_urbana.shp"; limite <- "carta_100M.shp"; 
-limite_srtm <- "area_srtm.shp"; dir_in <- "inputs/campo/"
-
-bases_model <- 
-  digeoqR::gera_bases_model(dir_in, limite, 
-                            limite_srtm, area_urbana, 
+```{r feicoes_model, results='hide'}
+bases_model <-
+  digeoqR::gera_bases_model(dir_in, limite,
+                            limite_srtm, area_urbana,
                             rios, massa_dagua)
 ```
 
-## Importando a imagem SRTM
+## Importando a imagem SRTM {#importando-a-imagem-srtm}
 
 ```{r srtm, message = FALSE, results='hide'}
 dem <- digeoqR::prepara_dem()
 ```
 
-## Planejando as estações de coleta
+## Planejando as estações de coleta {#planejando-as-estações-de-coleta}
 
-```{r plan}
-
-threshold <- 250; min_length <- "0.02"; max_ordem <- 3; 
-wbt_wd <- "outputs/modelo/"; EPSG <- 4326; 
-dir_out <- "outputs/"  
-
-gera_est <- 
+```{r plan, results='hide'}
+ gera_est <- 
  digeoqR::gera_estacoes(dem, dir_out, 
                         bases_model, 
                         EPSG, threshold, 
@@ -70,30 +81,29 @@ gera_est <-
                         max_ordem, wbt_wd) 
 ```
 
-## Mapa das estações planejadas
+## Mapa das estações planejadas {#mapa-das-estações-planejadas}
 
 ```{r mapa_est_plan, echo=FALSE}
 plot(gera_est$mapa)
 ```
 
-## Modelagem das bacias e validação das estações planejadas
+## Modelagem das bacias e validação das estações planejadas {#modelagem-das-bacias-e-validação-das-estações-planejadas}
 
 ```{r model_bacias_plan, results='hide'}
-
-fase <- 1; classe_am <- 2; bacia_minima <- 4 
-bacia_maxima <- 25; snap_dist <- "0.02" 
+fase <- 1
+classe_am <- 2
 
 modela_bacias_plan <-
   digeoqR::modela_bacias(fase, EPSG, dem, bases_model, 
                          gera_est, ex_campo, classe_am, 
                          bacia_minima, bacia_maxima, 
-                         threshold ,snap_dist, 
+                         threshold, snap_dist, 
                          min_length, max_ordem, 
                          dir_out, wbt_wd)
 
 ```
 
-## Mapa de planejamento validado
+## Mapa de planejamento validado {#mapa-de-planejamento_validado}
 
 ```{r plan_mapa, echo=FALSE}
 plot(modela_bacias_plan$`mapa plan`)
@@ -103,27 +113,23 @@ plot(modela_bacias_plan$`mapa plan`)
 
 -   [Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD)](#importação-dos-dados-de-campo-fcampo-suvey123-qfield)
 
--   [Modelagem das bacias amostradas]
+-   [Modelagem das bacias amostradas](#modelagem-das-bacias-amostradas)
 
--   [Visualização do mapa de estações amostradas e bacias]
+-   [Visualização do mapa de estações amostradas e bacias](#visualização-do-mapa-de-estações-amostradas-e-bacias)
 
--   [Importação dos dados analíticos]
+-   [Importação dos dados analíticos](#importação-dos-dados-analíticos)
 
     -   Sedimento de corrente
 
     -   Concentrado de bateia
 
--   [Organização os dados analíticos]
+-   [Organização os dados analíticos](#organização-dos_dados_analíticos)
 
 -   [Enriquecimento as bases com feições espaciais (geologia)](#enriquecimento-as-bases-com-feições-espaciais-geologia)
 
 ## Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD) {#importação-dos-dados-de-campo-fcampo-suvey123-qfield}
 
 ```{r dados_campo, results='hide'}
-
-tipo_base <- 1; base_campo <- "fcampo"; 
-dir_os <- "inputs/os/" 
-
 ex_campo <- digeoqR::extrai_dados_campo(tipo_base,
                                         dir_in,
                                         base_campo,
@@ -132,10 +138,10 @@ ex_campo <- digeoqR::extrai_dados_campo(tipo_base,
                                         dir_out)
 ```
 
-## Modelagem das bacias amostradas
+## Modelagem das bacias amostradas {#modelagem-das-bacias-amostradas}
 
--   Sedimento de corrente\
--   Concentrado de bateia
+-   Sedimento de corrente  
+-   Concentrado de bateia  
 
 ## 
 
@@ -171,7 +177,7 @@ modela_bacias_cb <-
                          max_ordem, dir_out, wbt_wd)
 ```
 
-## Visualização do mapa de estações amostradas e bacias
+## Visualização do mapa de estações amostradas e bacias {#visualização-do-mapa-de-estações-amostradas-e-bacias}
 
 -   Sedimento de corrente\
 -   Concentrado de bateia
@@ -192,7 +198,7 @@ plot(modela_bacias_sc$`mapa amostragem`)
 plot(modela_bacias_cb$`mapa amostragem`)
 ```
 
-## Importação dos dados analíticos
+## Importação dos dados analíticos {#importação-dos-dados-analíticos}
 
 Nessa rotina os dados dos boletins são lidos e arrumados em dois formatos:\
 - dados brutos (sem substituição dos qualificadores)\
@@ -218,16 +224,14 @@ quimica <-
 ### Concentrado de bateia
 
 ```{r analises_cb, results='hide'}
-
-dir_bol <- "inputs/mineral/B/"; 
-analise <- 1; classe_am <- 1
+dir_bol <- "inputs/mineral/B/"
 
 mineral <- 
-  digeoqR::le_boletim_mineral(classe_am, dir_bol)
+  digeoqR::le_boletim_mineral(dir_bol)
 ```
 
 
-## Organização os dados analíticos
+## Organização dos dados analíticos {#organização-dos_dados_analíticos}
 
 ## 
 
@@ -376,33 +380,62 @@ lito_bacia_sc <-
    
 ```
 
-# Etapa III Tratamento estatístico dos dados - Sedimento de corrente
+# Etapa III Avaliação dos dados analíticos
 
--   QAQC das duplicatas de campo e replicatas de laboratório\
--   Estatística descritiva\
--   Testes estatísticos
-    -   Normalidade (Shapiro-Wilker e Lillie-Fors)  
+-   [Análise dos dados censurados à esquerda](#dados-censurados-à-esquerda)
+-   [Análise dos valores ausentes](#análise-dos-valores-ausentes)
+
+-   [Testes estatísticos (dados brutos)](#testes-estatísticos)
+    -   Normalidade (Shapiro-Wilker e Lillie-Fors    
     -   Comparativo (Wilcolxon não pareado)  
+-   [QAQC das duplicatas de campo e replicatas de laboratório](#qaqc-das-duplicatas-de-campo-e replicatas-de-laboratório)
+    -   Duplicatas de campo  
+    -   Replicatas de laboratório
+-   [Estatística descritiva](#estatística-descritiva)
+##
 
-## Testes estatísticos (dados brutos)
+## Análise dos dados censurados à esquerda {#análise-dos-dados-censurados-à-esquerda}
+```{r analise_elem,  results='hide'}
+corte_val = 70
+base <- base_sc
+res_val <- digeoqR::validacao_elementos(dir_out, base, corte_val)
+```
+
+### Elementos Válidos (grau de detecção >70%)
+```{r elem_val, echo= FALSE }
+elem_val = res_val[[2]]
+rmarkdown::paged_table(data.frame('Elementos' = paste(elem_val, collapse=", ")))
+```
+
+##
+### Número de dados válidos por analito
+
+```{r n_validos, echo = FALSE}
+nmld <- res_val[[1]][, c("elementos", "nneg")]
+colnames(nmld) <- c("Analito", "N. Válidos")
+rmarkdown::paged_table(nmld, 
+                       options = list(rows.print = 9))
+```
+## Análise dos valores ausentes {#análise-dos-valores-ausentes}
+##
+### Número de dados ausentes por analito
+
+```{r ausentes, echo = FALSE}
+nmna <- res_val[[1]][, c("elementos", "nna")]
+colnames(nmna) <- c("Analito", "N. Ausentes")
+rmarkdown::paged_table(nmna, 
+                       options = list(rows.print = 9))
+```
+
+## Testes estatísticos (dados brutos) {#testes-estatísticos}
 
 ```{r test_brutos, echo=FALSE, results='hide'}
 lito_bacia <- lito_bacia_sc; leg <- leg2; base <- base_sc
 
 teste_mtd_transf1 <-
-  digeoqR::testes_estatisticos(base, lito_bacia, mtd_transf = 1, nbc = 10, leg)
-```
-## 
-### Valores qualificados
-```{r val_qualif, echo=FALSE}
-val_qualif <- 
-  teste_mtd_transf1[['elementos pct qualificado']]
-elem_val <- 
-  val_qualif[val_qualif$nval_ppc >= 70, "elementos"]
-rmarkdown::paged_table(val_qualif, options = list(rows.print = 9, cols.print = 5))
+  digeoqR::testes_estatisticos(dir_out, base, lito_bacia, mtd_transf = 1, nbc = 10, leg, elem_val )
 ```
 
-## 
 
 ### Teste Shapiro-Wilker
 
@@ -410,7 +443,8 @@ rmarkdown::paged_table(val_qualif, options = list(rows.print = 9, cols.print = 5
 
 teste_sw <- teste_mtd_transf1[['test. norm. Shapiro-Wilk unidades']]
  
-rmarkdown::paged_table(teste_sw, options = list(rows.print = 9, cols.print = 5))
+rmarkdown::paged_table(teste_sw, 
+                       options = list(rows.print = 9, cols.print = 5))
 ```
 
 ## 
@@ -419,7 +453,8 @@ rmarkdown::paged_table(teste_sw, options = list(rows.print = 9, cols.print = 5))
 
 ```{r lf_brutos, echo=FALSE}
 teste_lf <- teste_mtd_transf1[["test. norm. Lillie geral"]]
-rmarkdown::paged_table(teste_lf, options = list(rows.print = 9, cols.print = 5))
+rmarkdown::paged_table(teste_lf, 
+                       options = list(rows.print = 9, cols.print = 5))
 ```
 
 
@@ -444,10 +479,10 @@ gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],
                          gp=gpar(fontsize=12,font=3))
 ```
 
-## QAQC das duplicatas de campo e replicatas de laborório
+## QAQC das duplicatas de campo e replicatas de laborório {#qaqc-das-duplicatas-de-campo-e replicatas-de-laboratório}
 
--   Campo\
--   Laboratório
+-   Campo  
+-   Laboratório  
 
 ## 
 
@@ -503,7 +538,7 @@ table_grid <- gridExtra::tableGrob(qaqc[["df tabela de precisão"]], rows = NULL
 gridExtra::grid.arrange(table_grid)
 ```
 
-## Estatística descritiva
+## Estatística descritiva {#estatística-descritiva}
 
 ### Geral
 
@@ -580,3 +615,7 @@ stat_transposta_a_sc <- stat_transposta_a_sc %>%
  dplyr::select(elementos) 
 rmarkdown::paged_table(stat_transposta_a_sc, options = list(rows.print = 9, cols.print = 5))
 ```
+
+# Etapa IV Classificação
+
+
