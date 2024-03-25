@@ -1,0 +1,582 @@
+---
+title: "Aplicação do R nos Levantamentos Geoquímicos"
+subtitle: "com o Pacote digeoqR"
+author: "Viviane Carillo Ferrari"
+
+format: 
+  revealjs:
+    logo: "images/logo.png"
+    width: 1600
+    height: 900
+    self-contained: true
+    incremental: false
+    footer: "DigeoqR code available [on GitHub]()."
+    theme: ["custom.scss"]
+    slide-number: c/t
+    show-slide-number: all
+    hash-type: number
+    preview-links: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+ #set to two decimal 
+require(magrittr)
+
+```
+
+# Etapa I de planejamento de estações
+
+-   [Trabalhando com feições espaciais]
+-   [Importando a imagem SRTM]
+-   [Planejando as estações de coleta]
+-   [Mapa das estações planejadas]
+-   [Modelagem das bacias e validação das estações planejadas]
+-   [Mapa das estações planejadas]
+
+## Trabalhando com feições espaciais
+
+```{r feiture}
+
+rios <- "rios_ibge.shp";  massa_dagua <- "massa_dagua.shp"; 
+area_urbana <- "area_urbana.shp"; limite <- "carta_100M.shp"; 
+limite_srtm <- "area_srtm.shp"; dir_in <- "inputs/campo/"
+
+bases_model <- 
+  digeoqR::gera_bases_model(dir_in, limite, 
+                            limite_srtm, area_urbana, 
+                            rios, massa_dagua)
+```
+
+## Importando a imagem SRTM
+
+```{r srtm, message = FALSE, results='hide'}
+dem <- digeoqR::prepara_dem()
+```
+
+## Planejando as estações de coleta
+
+```{r plan}
+
+threshold <- 250; min_length <- "0.02"; max_ordem <- 3; 
+wbt_wd <- "outputs/modelo/"; EPSG <- 4326; 
+dir_out <- "outputs/"  
+
+gera_est <- 
+ digeoqR::gera_estacoes(dem, dir_out, 
+                        bases_model, 
+                        EPSG, threshold, 
+                        min_length, 
+                        max_ordem, wbt_wd) 
+```
+
+## Mapa das estações planejadas
+
+```{r mapa_est_plan, echo=FALSE}
+plot(gera_est$mapa)
+```
+
+## Modelagem das bacias e validação das estações planejadas
+
+```{r model_bacias_plan, results='hide'}
+
+fase <- 1; classe_am <- 2; bacia_minima <- 4 
+bacia_maxima <- 25; snap_dist <- "0.02" 
+
+modela_bacias_plan <-
+  digeoqR::modela_bacias(fase, EPSG, dem, bases_model, 
+                         gera_est, ex_campo, classe_am, 
+                         bacia_minima, bacia_maxima, 
+                         threshold ,snap_dist, 
+                         min_length, max_ordem, 
+                         dir_out, wbt_wd)
+
+```
+
+## Mapa de planejamento validado
+
+```{r plan_mapa, echo=FALSE}
+plot(modela_bacias_plan$`mapa plan`)
+```
+
+# Etapa II Organização dos dados do Levantamento Geoquímico
+
+-   [Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD)](#importação-dos-dados-de-campo-fcampo-suvey123-qfield)
+
+-   [Modelagem das bacias amostradas]
+
+-   [Visualização do mapa de estações amostradas e bacias]
+
+-   [Importação dos dados analíticos]
+
+    -   Sedimento de corrente
+
+    -   Concentrado de bateia
+
+-   [Organização os dados analíticos]
+
+-   [Enriquecimento as bases com feições espaciais (geologia)](#enriquecimento-as-bases-com-feições-espaciais-geologia)
+
+## Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD) {#importação-dos-dados-de-campo-fcampo-suvey123-qfield}
+
+```{r dados_campo, results='hide'}
+
+tipo_base <- 1; base_campo <- "fcampo"; 
+dir_os <- "inputs/os/" 
+
+ex_campo <- digeoqR::extrai_dados_campo(tipo_base,
+                                        dir_in,
+                                        base_campo,
+                                        dir_os,
+                                        EPSG,
+                                        dir_out)
+```
+
+## Modelagem das bacias amostradas
+
+-   Sedimento de corrente\
+-   Concentrado de bateia
+
+## 
+
+### Sedimento de corrente
+
+```{r sed_cor}
+
+fase <- 2
+classe_am <- 2
+
+modela_bacias_sc <-
+  digeoqR::modela_bacias(fase, EPSG, dem, bases_model, 
+                         gera_est, ex_campo, classe_am, 
+                         bacia_minima, bacia_maxima, 
+                         threshold, snap_dist, min_length, 
+                         max_ordem, dir_out, wbt_wd)
+```
+
+## 
+
+### Concentrado de bateia
+
+```{r conc_bat}
+
+fase <- 2
+classe_am <- 1
+
+modela_bacias_cb <-
+  digeoqR::modela_bacias(fase, EPSG, dem, bases_model, 
+                         gera_est, ex_campo, classe_am, 
+                         bacia_minima, bacia_maxima, 
+                         threshold, snap_dist, min_length, 
+                         max_ordem, dir_out, wbt_wd)
+```
+
+## Visualização do mapa de estações amostradas e bacias
+
+-   Sedimento de corrente\
+-   Concentrado de bateia
+
+## 
+
+### Sedimento de corrente
+
+```{r mapa_am_sc, echo=FALSE}
+plot(modela_bacias_sc$`mapa amostragem`)
+```
+
+## 
+
+### Concentrado de Bateia
+
+```{r mapa_am_cb, echo=FALSE}
+plot(modela_bacias_cb$`mapa amostragem`)
+```
+
+## Importação dos dados analíticos
+
+Nessa rotina os dados dos boletins são lidos e arrumados em dois formatos:\
+- dados brutos (sem substituição dos qualificadores)\
+- dados transformados (substituição \<LD por 0,5\*LD)\
+
+## 
+
+### Sedimento de corrente
+
+```{r analises_sc, results='hide'}
+
+dir_bol <- "inputs/quimica/S/"; analise <- 2; 
+dir_ucc <- "inputs/quimica/"; ref_ucc <- "ucc.csv";
+classe_am <- 2
+
+quimica <- 
+  digeoqR::le_boletim_quimica(classe_am, dir_bol,
+                              dir_ucc, ref_ucc)
+```
+
+## 
+
+### Concentrado de bateia
+
+```{r analises_cb, results='hide'}
+
+dir_bol <- "inputs/mineral/B/"; 
+analise <- 1; classe_am <- 1
+
+mineral <- 
+  digeoqR::le_boletim_mineral(classe_am, dir_bol)
+```
+
+
+## Organização os dados analíticos
+
+## 
+
+### Sedimento de corrente
+
+```{r base_sc, results='hide', message=FALSE}
+
+dir_bol <- "inputs/quimica/S/"
+analise <- 2
+classe_am <- 2
+
+base_sc <- 
+  digeoqR::prepara_bases(dir_bol, classe_am, 
+                         analise,quimica, 
+                         mineral, ex_campo)
+```
+
+## 
+
+#### Base preparada - Sedimento de corrente
+
+```{r tab_base_sc, echo=FALSE}
+dados_sc <- base_sc[["dados brutos"]]
+rmarkdown::paged_table(dados_sc, options = list(rows.print = 9, cols.print = 5))
+```
+
+## 
+
+### Concentrado de bateia
+
+```{r base_cb, results='hide', message=FALSE}
+# 
+dir_bol <- "inputs/mineral/B/"
+analise <- 1
+classe_am <- 1
+base_cb <- 
+  digeoqR::prepara_bases(dir_bol, classe_am, 
+                         analise,quimica, 
+                         mineral, ex_campo)
+```
+
+## 
+
+#### Base preparada - Concentrado de bateia
+
+```{r tab_base_cb, echo=FALSE}
+dados_cb <- base_cb[["dados brutos"]]
+rmarkdown::paged_table(dados_cb, options = list(rows.print = 9, cols.print = 5))
+```
+
+## Enriquecimento as bases com feições espaciais (geologia) {#enriquecimento-as-bases-com-feições-espaciais-geologia}
+
+-   Extrai dados xml cores da layer (QGIS)\
+-   Visualisa cores das unidades geradas\
+-   Preparação recorte da geologia e estilo de cores\
+-   Preparação da legenda da geologia\
+-   Mapa geológico simplificado\
+-   Intersecção entre bacias e geologia
+
+## 
+
+### Extrai dados xml cores da layer (QGIS)
+
+```{r mapas_base}
+
+legenda_geol <- 
+  digeoqR::resgata_legenda_xml()
+
+```
+
+## 
+
+### Visualisa cores das unidades geradas
+
+```{r echo=FALSE}
+rmarkdown::paged_table(head(legenda_geol[,-1]))
+```
+
+## 
+
+### Preparação recorte da geologia e estilo de cores
+
+```{r recorte_geol, results='hide'}
+
+feicao_in <- "geologia_br"; feicao_out <- "geologia_area";
+dir_in <- "inputs/campo/"; area <- "area_srtm"
+chave <- "RANGE"
+
+geologia <- 
+  digeoqR::recorta_feicao_area(dir_in, dir_out, 
+                               area, feicao_in,
+                               feicao_out, chave)
+```
+
+## 
+
+### Preparação da legenda da geologia
+
+```{r leg_geo, results='hide'}
+
+lista_legenda <- 
+  digeoqR::prepara_legenda(feicao_rec = geologia, 
+                           dir_out, 
+                           dir_in, 
+                           nome_xml = "geologia")
+```
+
+## 
+
+### Mapa geológico simplificado
+
+```{r mapa_geol, echo=FALSE}
+leg1 <- lista_legenda[[1]]
+leg2 <- lista_legenda[[2]]
+estacoes <- ex_campo[["estações"]]
+estacoes <- estacoes[estacoes$CLASSE == "Sedimento de corrente",]
+ggplot2::ggplot() +
+  ggplot2::geom_sf(data=geologia, ggplot2::aes(fill = RANGE)) + 
+  ggplot2::geom_sf(data=estacoes, color = "black", shape = 1) + 
+  ggplot2::scale_fill_manual(values=leg2$RGB, breaks=leg2$SIGLA) +
+  ggplot2::theme_minimal()+
+  ggspatial::annotation_scale(location = "br", style = "ticks") +
+  ggspatial::annotation_north_arrow(location = "bl")
+
+```
+
+## 
+
+### Intersecção entre bacias e geologia
+
+```{r inters_bacias, results='hide'}
+
+bacias <- modela_bacias_sc[["bacias"]]
+estacoes <- base_sc[["dados campo sf"]]
+feicao_rec <- geologia
+nome_xml <- "geologia"
+classe_am <- 2
+tipo_leg <- 2
+
+lito_bacia_sc <-
+  digeoqR::intersecta_bacias(dir_in,
+                             dir_out, bases_model,
+                             bacias, feicao_rec,
+                             tipo_leg, estacoes,
+                             classe_am, nome_xml)
+   
+```
+
+# Etapa III Tratamento estatístico dos dados - Sedimento de corrente
+
+-   QAQC das duplicatas de campo e replicatas de laboratório\
+-   Estatística descritiva\
+-   Testes estatísticos
+    -   Normalidade (Shapiro-Wilker e Lillie-Fors)  
+    -   Comparativo (Wilcolxon não pareado)  
+
+## Testes estatísticos (dados brutos)
+
+```{r test_brutos, echo=FALSE, results='hide'}
+lito_bacia <- lito_bacia_sc; leg <- leg2; base <- base_sc
+
+teste_mtd_transf1 <-
+  digeoqR::testes_estatisticos(base, lito_bacia, mtd_transf = 1, nbc = 10, leg)
+```
+## 
+### Valores qualificados
+```{r val_qualif, echo=FALSE}
+val_qualif <- 
+  teste_mtd_transf1[['elementos pct qualificado']]
+elem_val <- 
+  val_qualif[val_qualif$nval_ppc >= 70, "elementos"]
+rmarkdown::paged_table(val_qualif, options = list(rows.print = 9, cols.print = 5))
+```
+
+## 
+
+### Teste Shapiro-Wilker
+
+```{r vis_sw_brutos, echo=FALSE}
+
+teste_sw <- teste_mtd_transf1[['test. norm. Shapiro-Wilk unidades']]
+ 
+rmarkdown::paged_table(teste_sw, options = list(rows.print = 9, cols.print = 5))
+```
+
+## 
+
+### Teste Lillie-Fors
+
+```{r lf_brutos, echo=FALSE}
+teste_lf <- teste_mtd_transf1[["test. norm. Lillie geral"]]
+rmarkdown::paged_table(teste_lf, options = list(rows.print = 9, cols.print = 5))
+```
+
+
+## 
+
+### Teste Wilcoxon
+
+```{r prep_vis_wilcoxon, results='hide'}
+vis_wilcolxon <- 
+  digeoqR::vis_teste_wilcox(dir_out, elem_val,base, 
+                            lito_bacia, nbc = 10)
+```
+
+## 
+
+#### Visualizaçao do teste Wilcoxon do Alumínio
+
+```{r vis_wx_al, echo = FALSE}
+gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],  
+                         ncol = 2,
+                         top = grid::textGrob(""),
+                         gp=gpar(fontsize=12,font=3))
+```
+
+## QAQC das duplicatas de campo e replicatas de laborório
+
+-   Campo\
+-   Laboratório
+
+## 
+
+### Duplicatas de campo
+
+```{r qaqc_campo, results='hide'}
+base <- base_sc
+tipo_am = 1
+qaqc <- digeoqR::qaqc_gq(dir_out, base, tipo_am)
+```
+
+## 
+
+#### Gráfico Thompson-Howard
+
+```{r vis_TH_campo, echo=FALSE}
+gridExtra::grid.arrange(grobs=qaqc[["gráfico com texto"]]["Al"], ncol = 1)
+```
+
+## 
+
+#### Tabela de precisão das duplicatas de campo
+
+```{r tab_precisao_campo, echo=FALSE}
+table_grid <- gridExtra::tableGrob(qaqc[["df tabela de precisão"]], rows = NULL, theme = gridExtra::ttheme_default(base_size = 20))
+gridExtra::grid.arrange(table_grid)
+```
+
+## 
+### Replicatas de laboratório
+```{r qaqc_lab, results='hide'}
+base <- base_sc
+tipo_am = 2
+qaqc <- digeoqR::qaqc_gq(dir_out, base, tipo_am)
+```
+
+## 
+
+
+
+#### Gráfico Thompson-Howard
+
+```{r vis_TH_lab, echo=FALSE}
+gridExtra::grid.arrange(grobs=qaqc[["gráfico com texto"]]["Al"], ncol = 1)
+```
+
+## 
+
+#### Tabela de precisão das replicatas de laboratório
+
+```{r tab_precisao_lab, echo=FALSE}
+table_grid <- gridExtra::tableGrob(qaqc[["df tabela de precisão"]], rows = NULL, theme = gridExtra::ttheme_default(base_size = 20))
+gridExtra::grid.arrange(table_grid)
+```
+
+## Estatística descritiva
+
+### Geral
+
+```{r stat_geral, results='hide'}
+
+rotulo_lito <- lito_bacia_sc[[2]]
+base <- base_sc
+tipo_proc <- 1
+
+tabela_estat_g_sc <- 
+  digeoqR::tabela_estatistica(tipo_proc,
+                              rotulo_lito, base,
+                              lista_legenda, dir_out)
+
+```
+
+## 
+
+#### Visualização do sumário estatístico - Elementos
+
+```{r vis_sum_stat_geral1, echo=FALSE}
+stat_transposta_g_sc <- tabela_estat_g_sc[[1]]
+colnames(stat_transposta_g_sc) <- stat_transposta_g_sc[2,]
+stat_transposta_g_sc <- data.frame(stat_transposta_g_sc)
+rmarkdown::paged_table(stat_transposta_g_sc, options = list(rows.print = 9, cols.print = 5))
+```
+
+## 
+
+#### Visualização do sumário estatístico - Parâmetros
+
+```{r vis_sum_stat_geral2, echo=FALSE}
+stat_normal_g_sc <- tabela_estat_g_sc[[2]]
+rmarkdown::paged_table(stat_normal_g_sc, options = list(rows.print = 9, cols.print = 5))
+```
+
+## 
+
+### Agrupado
+
+```{r stat_unid, results='hide'}
+
+tipo_proc = 2
+
+tabela_estat_a_sc <-
+  digeoqR::tabela_estatistica(tipo_proc,
+                              rotulo_lito,
+                              base, lista_legenda, dir_out)
+
+```
+
+## 
+
+#### Visualização do sumário estatístico - Elementos
+
+```{r vis_sum_stat_unid1, echo=FALSE}
+
+stat_normal_a_sc <- tabela_estat_a_sc[[2]]
+stat_normal_a_sc <- data.frame(stat_normal_a_sc, check.names = FALSE)
+rmarkdown::paged_table(stat_normal_a_sc, options = list(rows.print = 9, cols.print = 5))
+```
+
+## 
+
+#### Visualização do sumário estatístico - Parâmetros
+
+```{r vis_sum_stat_unid2, echo=FALSE}
+stat_transposta_a_sc <- tabela_estat_a_sc[[1]]
+colnames(stat_transposta_a_sc) <- stat_transposta_a_sc[2,]
+stat_transposta_a_sc <- data.frame(stat_transposta_a_sc, check.names = FALSE)
+elementos <- unique(colnames(stat_transposta_a_sc))
+elementos <- elementos[!is.na(elementos)]
+stat_transposta_a_sc <- stat_transposta_a_sc %>%
+ dplyr::select(elementos) 
+rmarkdown::paged_table(stat_transposta_a_sc, options = list(rows.print = 9, cols.print = 5))
+```
