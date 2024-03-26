@@ -10,7 +10,7 @@ format:
     height: 900
     self-contained: true
     incremental: false
-    footer: "DigeoqR code available [on GitHub]()."
+    footer: "Slides [on GitHub](https://github.com/VivianeCF/R4geoch.git)."
     theme: ["custom.scss"]
     slide-number: c/t
     show-slide-number: all
@@ -24,6 +24,14 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 require(magrittr)
 
 ```
+# Introdução
+O fluxo de trabalho apresentado aqui abrange as tarefas iniciais de um projeto de levantamento geoquímico desenvolvido no SGB.  
+Utilizo como exemplo os dados do levantamento da folha Eldorado Paulista levantada em 2008. Na época usávamos o banco de ddados FCAMPO para registro dos dados das amostras.  
+A proposta aqui é usar as ferramentas prontas do R e combinálas para as nossas necessidades. Para facilitar usei códigos para diferentes funções que ajudam a automatizar tarefas que são trabalhosas com o uso de outros programas.  
+Desenvolvi um pacote R onde pretendo reunir todas as funções que mais utilizamos nos sossos trabalhos.  https://github.com/VivianeCF/digeoqR.git
+Nos próximos slides serão apresentadas as funções já incluídas no pacote. Primeiro apresento a sintaxe no R para utilizá-la e depois o resultado dela.  
+Deste nosso encontro podemos criar um grupo para testar estas funções com outros dados. É esperado que seus dados ão tenham as mesmas estruturas de dados desse projeto. Possivelmente será preciso desenvolver um conversor para outros tipos de dados.  
+
 
 # Etapa I de planejamento de estações
 
