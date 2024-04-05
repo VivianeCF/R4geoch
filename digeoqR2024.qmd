@@ -1413,7 +1413,7 @@ litho_max <- lito_bacia_sc[[2]]
  plot(mapas_tif_un$mapas[[4]])
 ```
 
-# 3. Fechamento
+## 3. Fechamento
 
 -   Minhas impressões do uso do R.
 
