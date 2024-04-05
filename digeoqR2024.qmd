@@ -1,6 +1,5 @@
 ---
-title: "Aplicação do R nos Levantamentos Geoquímicos"
-subtitle: "com o Pacote digeoqR"
+title: "Uso do R nos Levantamentos Geoquímicos"
 author: "Viviane Carillo Ferrari"
 
 format: 
@@ -24,16 +23,687 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 require(magrittr)
 
 ```
-# Introdução
-O fluxo de trabalho apresentado aqui abrange as tarefas iniciais de um projeto de levantamento geoquímico desenvolvido no SGB.  
-Utilizo como exemplo os dados do levantamento da folha Eldorado Paulista levantada em 2008. Na época usávamos o banco de ddados FCAMPO para registro dos dados das amostras.  
-A proposta aqui é usar as ferramentas prontas do R e combinálas para as nossas necessidades. Para facilitar usei códigos para diferentes funções que ajudam a automatizar tarefas que são trabalhosas com o uso de outros programas.  
-Desenvolvi um pacote R onde pretendo reunir todas as funções que mais utilizamos nos sossos trabalhos.  https://github.com/VivianeCF/digeoqR.git
-Nos próximos slides serão apresentadas as funções já incluídas no pacote. Primeiro apresento a sintaxe no R para utilizá-la e depois o resultado dela.  
-Deste nosso encontro podemos criar um grupo para testar estas funções com outros dados. É esperado que seus dados ão tenham as mesmas estruturas de dados desse projeto. Possivelmente será preciso desenvolver um conversor para outros tipos de dados.  
 
+## Introdução
 
-# Etapa I de planejamento de estações
+Sejam bem vindos, estou muito contente pelo interesse de vocês. 😍\
+
+O fluxo de trabalho apresentado aqui abrange as tarefas iniciais de um projeto de levantamento geoquímico desenvolvido no SGB.\
+
+Utilizo como exemplo os dados do levantamento da folha Eldorado Paulista levantada em 2008.
+
+## Objetivos
+
+A proposta aqui é mostrar um caminho mais fácil de usar as ferramentas do R, disponibilizadas na forma de um pacote do R desenvolvido para geoquímicos.
+
+Hoje o pacote [`digeoqR`](https://github.com/VivianeCF/digeoqR.git) já reune algumas funcionalidades muito interessantes.\
+
+No futuro pretendo reunir mais funções.\
+
+Aqui tento lançar uma semente para os futuros colaboradores deste ou de outros pacotes.\
+
+Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-CPRM.\
+
+## Conteúdo
+
+1.  Introdução a linguagem R
+
+2.  Uso do R no levantamento geoquímico
+
+3.  Fechamento
+
+## 1. Introdução a linguagem R
+
+::: columns
+::: {.column width="50%" style="font-size: 30px"}
+1.  [O que é R?](#r)
+
+    -   Por que usar R?
+    -   É útil programar?
+    -   CRAN
+
+2.  [Instalação e estrutura](#instalacao-e-estrutura)
+
+    -   Instalação
+
+    -   Sessão
+
+    -   Versões
+
+3.  [Estilos de programação](#estilo_de_programacao)
+
+    -   Scripts
+
+    -   Regras
+:::
+
+::: {.column width="50%" style="font-size: 30px"}
+4.  [Pacotes](#pacotes)
+
+    -   Instalação
+
+    -   Pacotes pré-instalados e rota de busca
+
+    -   Recursos
+
+5.  [Ajuda em R](#ajuda-em-r)
+
+    -   Interna
+
+    -   Externa
+
+6.  [Iniciar sessão no R](#iniciar-sessao-no-r)
+
+    -   Alguns comandos básicos
+
+    -   options()
+
+    -   Erros e advertências
+
+    -   Uso de funções
+:::
+:::
+
+##
+
+### O que é R? {#r}
+
+::: incremental
+-   R é uma linguagem de programação interpretada de código aberto. Não é compilada e é executada passo a passo por um programa que interpreta os resultados.
+
+-   R é uma linguagem de progamação orientada a manipulação de dados, análise estatística e visualização gráfica dos dados.
+
+-   Em 1993 o R foi criado como um dialeto da linguagem S desenvolvida por [John Chambers](https://www.r-bloggers.com/2014/01/john-chambers-recounts-the-history-of-s-and-r/) e colaboradores.
+
+-   Os nomes importantes nesta história são muitos, mas os principais são: [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman/statistician) e [Ross Ihaka](https://www.stat.auckland.ac.nz/~ihaka/). A hitória do R pode ser vista [aqui](https://cran.r-project.org/doc/html/interface98-paper/paper_2.html).
+
+-   Em 1995, [Martin Mächler](https://people.math.ethz.ch/~maechler/) deu uma contribuição importante ao convencer Ross e Robert a usar a Licença Pública Geral [GNU](https://gnu.org/licenses/gpl-3.0.html) (General Public Licenses) para tornar o R um software livre. A versão 1.0.0 do R só foi lançada em fevereiro de 2000.
+:::
+
+## 
+
+#### Por que Usar R? {#sec-porque-usar-r}
+
+Algumas das muitas razões:
+
+::: {.incremental style="line-height: 1.8"}
+1.  É gratuito
+
+2.  Funciona em múltiplas plataformas (Windows, MAC, Linux)
+
+3.  Replicabilidade
+
+4.  Atualização das últimas técnicas estatísticas
+
+5.  Está em constante desenvolvimento
+
+6.  Ferramenta poderosa para criação de gráficos
+
+7.  Integração com outras linguagens: LATEX, C++, Python, Julia, Stan...
+:::
+
+## 
+
+::: {#pq_R style="color: blue; fonte-size: 50px"}
+::: {style="color: black; font-size: 50px; text-align: center;"}
+\
+\
+
+E uma razão fundamental:\
+\
+Conta com uma comunidade muito ativa.
+
+\
+\
+:::
+:::
+
+::: {#razao_R style="font-size: 50px; text-align: center;"}
+"When you talk about choosing programming languages, I always say you shouldn't pick them based on technical merits, but rather pick them based on the community."
+:::
+
+::: {style="font-size: 50px; text-align: right;"}
+[Hadley Wickham](https://www.r-bloggers.com/2018/08/advice-to-young-and-old-programmers-a-conversation-with-hadley-wickham/)
+:::
+
+## 
+
+#### Por que programar?
+
+::: {style="font-size: 50px; line-height: 200%;"}
+-   Melhora a organização das ideias.
+-   Aumenta a criatividade para resolver problemas.
+-   Torna a solução dos problemas mais eficiente.
+:::
+
+## 
+
+#### CRAN {#sec-informação-sobre-r-e-o-cran}
+
+CRAN (The Comprehensive R Archive Network) é uma rede ftp (File Transfer Protocol) que contem toda a informação sobre R e seus pacotes.\
+Na página (<https://cran.r-project.org>) se encontram todas as informações nesessárias para iniciar-se em R:
+
+::: {#info_r style="margin-left: 10%;"}
+-   [Manuais principais](https://cran.r-project.org/manuals.html)
+
+-   [Políticas do repositório](https://cran.r-project.org/web/packages/policies.html)
+
+-   [Livros relacionados com S e R em vários idiomas](https://cran.r-project.org/other-docs.html)
+
+-   [Jornal do R](https://journal.r-project.org/)
+:::
+
+## 
+
+#### Outros locais de informação
+
+Informações relevantes sobre R podem ser encontradas em:
+
+::: {#other_info style="margin-left: 10%"}
+-   [Journal of Statistical Software](https://www.jstatsoft.org/index)
+
+-   [Tendências atuais no GitHub](https://github.com/trending/r?since=monthly)
+
+-   [R-blogger](https://www.r-bloggers.com/)
+:::
+
+##
+
+### Instalação e estrutura {#instalacao-e-estrutura}
+
+1.  Download
+
+-   Download e instruções de instalação do R: <https://cran.r-project.org/>\
+-   Download e instruções de instalação do RStudio: <https://posit.co/download/rstudio-desktop/>
+
+2.  Atualização do R
+
+```{r instal_windows, eval = FALSE, include=TRUE, echo=TRUE}
+install.packages("installr")
+installr::updateR()
+```
+
+3.  R online
+
+-   é um R que é executado de maneira mais lenta, com pouco processamento e sem poder carregar pacotes: <https://rdrr.io/snippets/>
+
+## 
+
+#### Mensagem inicial {style="font-size: 30px;"}
+
+\
+
+```{r mensagem R, eval = FALSE, include=TRUE, echo=TRUE, `code-line-numbers`="1-3|5-7|9-11|13-15"}
+
+R version 4.3.2 (2023-10-31 ucrt) -- "Eye Holes"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R é um software livre e vem sem GARANTIA ALGUMA.
+Você pode redistribuí-lo sob certas circunstâncias.
+Digite 'license()' ou 'licence()' para detalhes de distribuição.
+
+R é um projeto colaborativo com muitos contribuidores.
+Digite 'contributors()' para obter mais informações e
+'citation()' para saber como citar o R ou pacotes do R em publicações.
+
+Digite 'demo()' para demonstrações, 'help()' para o sistema on-line de ajuda,
+ou 'help.start()' para abrir o sistema de ajuda em HTML no seu navegador.
+Digite 'q()' para sair do R.
+
+```
+
+## 
+
++--------------------------------------------------------------------------------------------+
+| ### ![](images/iconR.jpg){fig-align="left" width="100"} Sessão do RGui {style="fig-align"} |
++--------------------------------------------------------------------------------------------+
+
+![](images/Rgui.PNG){fig-align="center"}
+
+## 
+
++-----------------------------------------------------------------------------------------------------+
+| ### ![](images/iconRStudio.jpg){fig-align="left" width="100"} Sessão do RStudio {style="fig-align"} |
++-----------------------------------------------------------------------------------------------------+
+
+![](images/rstudio.PNG){fig-align="center" width="1200"}
+
+## 
+
+#### Painéis do RStudio
+
++------------+-------------------------------------------------------------------------------------------+
+| Editor     | Local para desenvolvimento de scripts.                                                    |
++------------+-------------------------------------------------------------------------------------------+
+| Console    | Imprime na tela as sentenças executadas a partir do editor ou diretamente no console      |
++------------+-------------------------------------------------------------------------------------------+
+| Run        | Executa uma instrução do editor (Ctrl+Enter) onde está o cursor ou o que está selecionado |
++------------+-------------------------------------------------------------------------------------------+
+| Enviroment | Lista todos os objetos gerados em cada sessão                                             |
++------------+-------------------------------------------------------------------------------------------+
+| History    | Histórico de execução                                                                     |
++------------+-------------------------------------------------------------------------------------------+
+| Terminal   | Um terminal para conectar ao Git, por exemplo, entre outras coisas                        |
++------------+-------------------------------------------------------------------------------------------+
+| Files      | Arquivos (dados, script) podem ser pesquisados neste painel                               |
++------------+-------------------------------------------------------------------------------------------+
+| Plot       | Imprime os gráficos                                                                       |
++------------+-------------------------------------------------------------------------------------------+
+| Packages   | É um gerenciador de pacotes instalados                                                    |
++------------+-------------------------------------------------------------------------------------------+
+| Help       | Ajuda rápida                                                                              |
++------------+-------------------------------------------------------------------------------------------+
+
+## 
+
+#### Locais com instruções e atalhos sobre a configuração e uso
+
+-   [Customizar o RStudio](https://support.posit.co/hc/en-us/articles/200549016-Customizing-the-RStudio-IDE)
+
+-   [Comandos do histórico](https://support.posit.co/hc/en-us/articles/200526217-Command-History-in-the-RStudio-IDE)\
+
+-   [Atalhos](https://support.posit.co/hc/en-us/articles/200404846-Working-in-the-Console-in-the-RStudio-IDE) para trabalhar no console.
+
+\
+
+## 
+
+#### Verificando as versões
+
+Ao iniciar o R, aparecerá no console a versão que está em execução e o nome.\
+
+\
+
+```{r, echo=TRUE, eval = FALSE, `code-line-numbers`="1|3|6|9|11|14"}
+R.Version() # Informação detalhada de versão do R
+
+R.Version()$version.string # Número e data da versão
+## [1] "R version 4.3.2 (2023-10-31 ucrt)"
+
+R.Version()$nickname # Nome da versão
+## [1] "Eye Holes"
+
+sessionInfo() # Informação detalhada da sessão atual
+
+RStudio.Version()$version # Versão do RStudio
+## [1] ‘2023.12.1.402’
+
+Sys.info() ## Informação do sistema operacional
+
+```
+
+## 
+
+#### Importância do uso de scripts
+
+Um script é um arquivo de texto que contém um conjunto de comandos ou instruções. Esses comandos e instruções são executados sequencialmente no R.
+
+::: {.incremental style="line-height: 1.8"}
+-   **Preparação**: para criar esses arquivos é importante para ter um histórico de trabalho.\
+
+-   **Arquivo:** O nome do arquivo deve ser suficientemente claro para refletir o conteúdo e encontrá-lo facilmente. Se possível deve ser curto e evitar o uso de `"."` .\
+
+-   **Documentação**: É muito importante comentar as operações ou funções utilizadas para poder replicar com facilidade o trabalho. Os comentários devem começar com `"#"`.\
+:::
+
+```{r, echo = TRUE, results='hide'}
+X <- c(1, 8, 19)
+# O objeto 'X' é um vetor de três números. 
+# Isto é um comentário
+```
+
+##
+
+### Estilos de programação {#estilo_de_programacao}
+
+Existem diferentes maneiras de program,ar. É importante ser cuidadoso na maneira de escrever seu código para que seja fácil replicar e ler o código.\
+
+```{r, eval=FALSE, echo=TRUE}
+## Mal escrito
+media<-function (x){n<-length(x);sum(x)/n}
+
+## Bem escrito
+media <- function(x) {
+        n <- length(x)
+        sum(x) / n
+}
+
+```
+
+## 
+
+#### Guias de estilo de programação
+
+-   O pacote [styler](https://cran.r-project.org/web/packages/styler/index.html) pode ser de grande ajuda
+
+-   Guia de estilo de Hadley [aqui](http://adv-r.had.co.nz/Style.html)
+
+-   Guia de estilo de Google [aqui](https://google.github.io/styleguide/Rguide.html)
+
+##
+### Pacotes {#pacotes}
+
+Um pacote é constituído por um conjunto de funções e arquivos de dados, devidamente documentados, que implementam uma ou mais técnicas para tratamento e análise de dados.
+
+#### Instalar
+
+```{r, echo = TRUE, eval=FALSE}
+## Baixa um pacote do CRAN
+install.packages("ggplot2")
+
+## Baixa um pacote do GitHub (versão de desenvolvimento do pacote)
+install.packages("devtools")
+devtools::install_github("VivianeCFerrari/digeoqR")
+
+## O nome do pacote sempre deve estar entre aspas!
+```
+
+## 
+
+#### Carregar
+
+```{r, echo = TRUE, eval=FALSE}
+## Para usar as funções de um pacote já instalado usar a função:
+## library(...)
+
+library("digeoqR")
+# Você pode dispensar o uso de aspas
+
+library(digeoqR)
+```
+
+## 
+
+#### Funções sobre os pacotes
+
+```{r, echo = TRUE, eval = FALSE}
+installed.packages() # lista pacotes instalados
+packageStatus() # informa quantos pacotes não estão atualizados
+download.packages() # compara versões dos pacotes instalados
+                    # com os atuais no CRAN
+available.packages() # lista todos os pacotes disponíveis
+update.packages() # atualiza pacotes
+library(help="MASS") # Informação sobre um paquete específico
+demo("graphics") # Demonstração de um pacote
+```
+
+## 
+
+A lista de pacotes anexados e objetos é alterada com o carregamento de um pacote.
+
+#### Estado inicial
+
+```{r, echo=TRUE}
+search()
+```
+
+#### Estado após carregar um pacote
+
+```{r, echo=TRUE}
+library("MASS")
+search()
+```
+
+## 
+
+#### Documentação e recursos sobre os pacotes
+
+-   [Lista de pacotes ativos](https://cran.r-project.org/web/packages/available_packages_by_name.html)
+-   [Lista de pacotes por área](https://cran.r-project.org/web/views/)
+-   [Pacotes mais baixados](https://www.r-pkg.org/downloaded)
+
+##
+### Ajuda {#ajuda-em-r}
+
+#### Conseguindo ajuda por si só
+
+```{r, echo=TRUE, eval=FALSE}
+help(lm) # Comando básico de busca
+?lm # idem do anterior
+help("+") # Ajuda sobre un operador
+help.search("norm") # Busca entre os pacotes instalados as
+# funções que contenham o termo "norm"
+??norm # idem anterior
+apropos("mean") # Lista de funções que contenham o termo "norm"
+help(rlm, package="MASS") # Busca a ajuda de uma função especifica
+# de um pacote
+RSiteSearch("glm") # Busca os manuais e arquivos de ajuda da web
+# R-project
+find("mean") # Devolve o pacote o qual pertenece a função.
+# (el pacote deve estar carregado: library())
+example(contour) # Executa os ejemplos disponíveis da função
+browseVignettes() # Mostra na web as vinhetas disponníveis e o acesso
+# a elas. De um pacote: (package="package-name")
+vignette(all=TRUE) # Mostra todas as vinhetas disponíveis na tela
+```
+
+## 
+
+```{=html}
+<iframe width="1400" height="800"             src="images/mean.html" title="help example"></iframe>
+```
+## 
+
+#### Elementos da ficha técnica de uma função
+
++--------------+------------------------------------------------+-------------------------------------------------------------------------+
+|              | Name:                                          | o nome da função (entre chaves `{}` o pacote ao qual pertence a função) |
++--------------+------------------------------------------------+-------------------------------------------------------------------------+
+| Description: | Breve descrição da função                      |                                                                         |
++--------------+------------------------------------------------+-------------------------------------------------------------------------+
+| Usage:       | Sintaxe da função                              |                                                                         |
++--------------+------------------------------------------------+-------------------------------------------------------------------------+
+| Arguments:   | Argumentos                                     |                                                                         |
++--------------+------------------------------------------------+-------------------------------------------------------------------------+
+| Value:       | Valores                                        |                                                                         |
++--------------+------------------------------------------------+-------------------------------------------------------------------------+
+| References:  | Referências                                    |                                                                         |
++--------------+------------------------------------------------+-------------------------------------------------------------------------+
+| See Also:    | Funções relacionadas                           |                                                                         |
++--------------+------------------------------------------------+-------------------------------------------------------------------------+
+| Examples:    | Exemplos de como se usa a função               |                                                                         |
++--------------+------------------------------------------------+-------------------------------------------------------------------------+
+
+## 
+
+#### Ajuda externa
+
+A comunidade R é muito ativa, por isso é muito fácil na web encontrar em qualquer motor de busca a solução para os problemas que surgem num fluxo de trabalho.
+
+De maneira geral se destacam estas páginas:
+
+<http://search.r-project.org/>
+
+<https://www.rdocumentation.org/>
+
+<https://rseek.org/>
+
+[https://stackover ow.com/questions/tagged/r](https://stackover%20ow.com/questions/tagged/r)
+
+<https://stats.stackexchange.com/questions/tagged/r>
+
+##
+### Iniciar uma sessão no R {#iniciar-sessao-no-r}
+
+#### Comandos básicos (I)
+
+```{r, echo=TRUE}
+ls() # lista os objetos que estão na memória em ".GlobalEnv"
+```
+
+```{r, echo=TRUE}
+y <- c(1, 5, 9) # cria um objeto que contem 3 números
+y
+```
+
+```{r}
+ls()
+```
+
+```{r, echo=TRUE, eval=FALSE}
+rm(y) # elimina (remove) o objeto 
+
+```
+
+```{r, echo=TRUE, eval=TRUE}
+objects() # idem ls()
+```
+
+```{r, echo=TRUE}
+rm(list=ls(all=TRUE)) # elimina todos os objetos da sessão de trabalho
+```
+
+## 
+
+#### Alguns comandos básicos (II)
+
+```{r, echo=FALSE, eval=FALSE}
+setwd() # establece directorio de trabajo
+getwd() # devuelve la ruta actual
+dir() # lista os arquivos no diretório
+list.files() # idem anterior
+dir.create() # cria um diretório
+```
+
+##### Exemplos
+
+```{r, eval=FALSE, echo=TRUE}
+# Opção 1
+setwd("C:/Users/usuario/Desktop/Curso_R") # Usar: nn ou /
+
+# Opção 2
+directorio1 <- "C:/Users/usuario/Desktop/Curso_R"
+setwd(directorio1)
+dir.create("../Curso_R/Plots")
+directorio2 <- "../Curso_R/Plots"
+setwd(directorio2)
+```
+
+## 
+
+##### Exemplos
+
+Este fluxo de trabalho tem seus problemas (ver esta discussão e estes pacotes: [aqui](https://cran.r-project.org/web/packages/here/index.html) e [rprojroot](https://cran.r-project.org/web/packages/rprojroot/index.html)
+
+## 
+
+#### `options()`
+
+Esta função permite modificar diversas opções sobre a forma como R calcula e exibe resultados.
+
+```{r, echo=TRUE, eval=TRUE}
+names(options())
+```
+
+## 
+
+A função `options()` permite o usuário definir e examinar opções globais.\
+As opções afetam a maneira como R calcula e exibe seus resultados.
+
+`digits`: número de digitos significativos a serem impressos
+
+```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1|4-5"}
+100/654
+## [1] 0.1529052
+
+options(digits = 4)
+100/654
+## [1] 0.1529
+```
+
+## 
+
+`width`: Lagura do texto de saída
+
+```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1-2|5-7"}
+set.seed(1234)
+rnorm(8)
+## [1] -1.2071  0.2774  1.0844 -2.3457  0.4291  0.5061 -0.5747 -0.5466
+
+options(width = 40)
+set.seed(1234)
+rnorm(8)
+## [1] -1.2071  0.2774  1.0844 -2.3457
+## [5]  0.4291  0.5061 -0.5747 -0.5466
+```
+
+## 
+
+#### Erros e advertências em R
+
+**Importante:**
+
+-   Quando aparece uma mensagem de erro ou de alerta não significa que o que estamos fazendo é certo!
+
+-   A principal diferença entre um erro e um aviso é que o erro não produz um nenhum resultado, enquanto um aviso o faz.\
+
+## 
+
+#### Executando funções no R
+
+/
+
+```{r, echo = TRUE, eval = FALSE, `code-line-numbers`="1|4-5|8|11|14"}
+mean(variable.1)
+## Error in mean(variable.1): object 'variable.1' not found
+
+variable.1 <- seq(1, 100, 0.3)
+mean(variable1)
+## Error in mean(variable1): object 'variable1' not found
+
+mean(variable.1)
+## [1] 50.5
+
+sqt(8)
+## Error in sqt(8): could not find function "sqt"
+
+sqrt(8)
+## [1] 2.828
+```
+
+## 
+
+#### Instruções de uso das funções
+
+Quando se usa uma função:
+
+-   Os argumentos que tem valores incorretos podem não ser chamados quando a função é executada.
+-   Os argumentos tem uma ordem que deve ser seguida se o usuário optar por não nomeá-los.
+-   Os argumentos podem ser colocados em ordem personalizada mas devem ser nomeados.\
+    \
+    Todas estas opções geram o mesmo resultado:\
+
+```{r, echo= TRUE, eval=FALSE}
+mean(x = 1:10)
+mean(1:10)
+mean(x = c(1:10, NA), trim = 0, na.rm = TRUE)
+mean(trim = 0, x = c(1:10, NA), na.rm = TRUE)
+mean(c(1:10, NA), 0, TRUE)
+## [1] 5.5
+```
+##
+### Referências extras {#sec-referências}
+
+::: incremental
+-   The R Foundation \[homepage on the Internet\]. Vienna, Austria: R Foundation for Statistical Computing. The R Project for Statistical Computing. Available from: [» https://www.r-project.org](https://www.r-project.org/)
+
+-   Grolemund G. Hands-On Programming with R \[monograph on the Internet\]. Sebastopol, CA: O’Reilly Media; 2014. Available from: [» https://rstudio-education.github.io/hopr](https://rstudio-education.github.io/hopr)
+:::
+
+## 2. Uso do R no levantamento geoquímico
+
+-   Etapa I - Planejamento das estações de coleta
+
+-   Etapa II - Organização dos dados do Levantamento Geoquímico
+
+-   Etapa III - Avaliação dos dados analíticos
+
+-   Etapa IV - Análise exploratória dos dados
+
+##
+
+### Etapa I planejamento de estações
 
 -   [Trabalhando com feições espaciais](#trabalhando-com-feições-espaciais)
 -   [Importando a imagem SRTM](#importando-a-imagem-srtm)
@@ -41,8 +711,9 @@ Deste nosso encontro podemos criar um grupo para testar estas funções com outr
 -   [Mapa das estações planejadas](#mapa-das-estações-planejadas)
 -   [Modelagem das bacias e validação das estações planejadas](#modelagem-das-bacias-e-validação-das-estações-planejadas)
 -   [Mapa de planejamento validado](#mapa-de-planejamento_validado)
+##
 
-## Trabalhando com feições espaciais {#trabalhando-com-feições-espaciais}
+#### Trabalhando com feições espaciais {#trabalhando-com-feições-espaciais}
 
 ```{r var1, echo=FALSE}
 rios <- "rios_ibge.shp"
@@ -71,14 +742,14 @@ bases_model <-
                             limite_srtm, area_urbana,
                             rios, massa_dagua)
 ```
-
-## Importando a imagem SRTM {#importando-a-imagem-srtm}
+##
+#### Importando a imagem SRTM {#importando-a-imagem-srtm}
 
 ```{r srtm, message = FALSE, results='hide'}
 dem <- digeoqR::prepara_dem()
 ```
-
-## Planejando as estações de coleta {#planejando-as-estações-de-coleta}
+##
+#### Planejando as estações de coleta {#planejando-as-estações-de-coleta}
 
 ```{r plan, results='hide'}
  gera_est <- 
@@ -88,14 +759,15 @@ dem <- digeoqR::prepara_dem()
                         min_length, 
                         max_ordem, wbt_wd) 
 ```
-
-## Mapa das estações planejadas {#mapa-das-estações-planejadas}
+##
+#### Mapa das estações planejadas {#mapa-das-estações-planejadas}
 
 ```{r mapa_est_plan, echo=FALSE}
 plot(gera_est$mapa)
 ```
+##
 
-## Modelagem das bacias e validação das estações planejadas {#modelagem-das-bacias-e-validação-das-estações-planejadas}
+#### Modelagem das bacias e validação das estações planejadas {#modelagem-das-bacias-e-validação-das-estações-planejadas}
 
 ```{r model_bacias_plan, results='hide'}
 fase <- 1
@@ -110,14 +782,14 @@ modela_bacias_plan <-
                          dir_out, wbt_wd)
 
 ```
-
-## Mapa de planejamento validado {#mapa-de-planejamento_validado}
+##
+#### Mapa de planejamento validado {#mapa-de-planejamento_validado}
 
 ```{r plan_mapa, echo=FALSE}
 plot(modela_bacias_plan$`mapa plan`)
 ```
-
-# Etapa II Organização dos dados do Levantamento Geoquímico
+##
+### Etapa II Organização dos dados do Levantamento Geoquímico
 
 -   [Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD)](#importação-dos-dados-de-campo-fcampo-suvey123-qfield)
 
@@ -133,9 +805,9 @@ plot(modela_bacias_plan$`mapa plan`)
 
 -   [Organização os dados analíticos](#organização-dos_dados_analíticos)
 
--   [Enriquecimento as bases com feições espaciais (geologia)](#enriquecimento-as-bases-com-feições-espaciais-geologia)
-
-## Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD) {#importação-dos-dados-de-campo-fcampo-suvey123-qfield}
+-   [Enriquecimento as bases com feições espaciais (geologia)](#enriquecimento-das-bases-com-feições-espaciais-geologia)
+##
+#### Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD) {#importação-dos-dados-de-campo-fcampo-suvey123-qfield}
 
 ```{r dados_campo, results='hide'}
 ex_campo <- digeoqR::extrai_dados_campo(tipo_base,
@@ -145,15 +817,15 @@ ex_campo <- digeoqR::extrai_dados_campo(tipo_base,
                                         EPSG,
                                         dir_out)
 ```
+##
+#### Modelagem das bacias amostradas {#modelagem-das-bacias-amostradas}
 
-## Modelagem das bacias amostradas {#modelagem-das-bacias-amostradas}
-
--   Sedimento de corrente  
--   Concentrado de bateia  
+-   Sedimento de corrente\
+-   Concentrado de bateia
 
 ## 
 
-### Sedimento de corrente
+##### Sedimento de corrente
 
 ```{r sed_cor}
 
@@ -170,7 +842,7 @@ modela_bacias_sc <-
 
 ## 
 
-### Concentrado de bateia
+##### Concentrado de bateia
 
 ```{r conc_bat}
 
@@ -184,15 +856,15 @@ modela_bacias_cb <-
                          threshold, snap_dist, min_length, 
                          max_ordem, dir_out, wbt_wd)
 ```
-
-## Visualização do mapa de estações amostradas e bacias {#visualização-do-mapa-de-estações-amostradas-e-bacias}
+##
+#### Visualização do mapa de estações amostradas e bacias {#visualização-do-mapa-de-estações-amostradas-e-bacias}
 
 -   Sedimento de corrente\
 -   Concentrado de bateia
 
 ## 
 
-### Sedimento de corrente
+##### Sedimento de corrente
 
 ```{r mapa_am_sc, echo=FALSE}
 plot(modela_bacias_sc$`mapa amostragem`)
@@ -200,13 +872,13 @@ plot(modela_bacias_sc$`mapa amostragem`)
 
 ## 
 
-### Concentrado de Bateia
+##### Concentrado de Bateia
 
 ```{r mapa_am_cb, echo=FALSE}
 plot(modela_bacias_cb$`mapa amostragem`)
 ```
-
-## Importação dos dados analíticos {#importação-dos-dados-analíticos}
+##
+#### Importação dos dados analíticos {#importação-dos-dados-analíticos}
 
 Nessa rotina os dados dos boletins são lidos e arrumados em dois formatos:\
 - dados brutos (sem substituição dos qualificadores)\
@@ -214,7 +886,7 @@ Nessa rotina os dados dos boletins são lidos e arrumados em dois formatos:\
 
 ## 
 
-### Sedimento de corrente
+##### Sedimento de corrente
 
 ```{r analises_sc, results='hide'}
 
@@ -229,7 +901,7 @@ quimica <-
 
 ## 
 
-### Concentrado de bateia
+##### Concentrado de bateia
 
 ```{r analises_cb, results='hide'}
 dir_bol <- "inputs/mineral/B/"
@@ -238,12 +910,10 @@ mineral <-
   digeoqR::le_boletim_mineral(dir_bol)
 ```
 
+##
+#### Organização dos dados analíticos {#organização-dos_dados_analíticos}
 
-## Organização dos dados analíticos {#organização-dos_dados_analíticos}
-
-## 
-
-### Sedimento de corrente
+##### Sedimento de corrente
 
 ```{r base_sc, results='hide', message=FALSE}
 
@@ -259,7 +929,7 @@ base_sc <-
 
 ## 
 
-#### Base preparada - Sedimento de corrente
+###### Base preparada - Sedimento de corrente
 
 ```{r tab_base_sc, echo=FALSE}
 dados_sc <- base_sc[["dados brutos"]]
@@ -268,7 +938,7 @@ rmarkdown::paged_table(dados_sc, options = list(rows.print = 9, cols.print = 5))
 
 ## 
 
-### Concentrado de bateia
+##### Concentrado de bateia
 
 ```{r base_cb, results='hide', message=FALSE}
 # 
@@ -283,25 +953,25 @@ base_cb <-
 
 ## 
 
-#### Base preparada - Concentrado de bateia
+###### Base preparada - Concentrado de bateia
 
 ```{r tab_base_cb, echo=FALSE}
 dados_cb <- base_cb[["dados brutos"]]
 rmarkdown::paged_table(dados_cb, options = list(rows.print = 9, cols.print = 5))
 ```
-
-## Enriquecimento as bases com feições espaciais (geologia) {#enriquecimento-as-bases-com-feições-espaciais-geologia}
+##
+#### Enriquecimento das bases com feições espaciais (geologia) {#enriquecimento-das-bases-com-feições-espaciais-geologia}
 
 -   Extrai dados xml cores da layer (QGIS)\
--   Visualisa cores das unidades geradas\
--   Preparação recorte da geologia e estilo de cores\
--   Preparação da legenda da geologia\
+-   Visualiza cores das unidades geradas\
+-   Prepara recorte da geologia e estilo de cores\
+-   Prepara legenda da geologia\
 -   Mapa geológico simplificado\
--   Intersecção entre bacias e geologia
+-   Faz a intersecção entre bacias e geologia
 
 ## 
 
-### Extrai dados xml cores da layer (QGIS)
+##### Extrai dados xml cores da layer (QGIS)
 
 ```{r mapas_base}
 
@@ -312,7 +982,7 @@ legenda_geol <-
 
 ## 
 
-### Visualisa cores das unidades geradas
+##### Visualiza cores das unidades geradas
 
 ```{r echo=FALSE}
 rmarkdown::paged_table(head(legenda_geol[,-1]))
@@ -320,7 +990,7 @@ rmarkdown::paged_table(head(legenda_geol[,-1]))
 
 ## 
 
-### Preparação recorte da geologia e estilo de cores
+##### Prepara o recorte da geologia e estilo de cores
 
 ```{r recorte_geol, results='hide'}
 
@@ -336,7 +1006,7 @@ geologia <-
 
 ## 
 
-### Preparação da legenda da geologia
+##### Prepara a legenda da geologia
 
 ```{r leg_geo, results='hide'}
 
@@ -349,7 +1019,7 @@ lista_legenda <-
 
 ## 
 
-### Mapa geológico simplificado
+##### Mapa geológico simplificado
 
 ```{r mapa_geol, echo=FALSE}
 leg1 <- lista_legenda[[1]]
@@ -368,7 +1038,7 @@ ggplot2::ggplot() +
 
 ## 
 
-### Intersecção entre bacias e geologia
+##### Faz a intersecção entre bacias e geologia
 
 ```{r inters_bacias, results='hide'}
 
@@ -388,35 +1058,44 @@ lito_bacia_sc <-
    
 ```
 
-# Etapa III Avaliação dos dados analíticos
+##
+### Etapa III Avaliação dos dados analíticos
 
 -   [Análise dos dados censurados à esquerda](#dados-censurados-à-esquerda)
+
 -   [Análise dos valores ausentes](#análise-dos-valores-ausentes)
 
 -   [Testes estatísticos (dados brutos)](#testes-estatísticos)
-    -   Normalidade (Shapiro-Wilker e Lillie-Fors    
-    -   Comparativo (Wilcolxon não pareado)  
--   [QAQC das duplicatas de campo e replicatas de laboratório](#qaqc-das-duplicatas-de-campo-e replicatas-de-laboratório)
-    -   Duplicatas de campo  
-    -   Replicatas de laboratório
--   [Estatística descritiva](#estatística-descritiva)
-##
 
-## Análise dos dados censurados à esquerda {#análise-dos-dados-censurados-à-esquerda}
+    -   Normalidade (Shapiro-Wilker e Lillie-Fors\
+    -   Comparativo (Wilcolxon não pareado)\
+
+-   [QAQC das duplicatas de campo e replicatas de laboratório](#qaqc-das-duplicatas-de-campo-e%20replicatas-de-laboratório)
+
+    -   Duplicatas de campo\
+    -   Replicatas de laboratório
+
+-   [Estatística descritiva](#estatística-descritiva) \##
+##
+#### Análise dos dados censurados à esquerda {#análise-dos-dados-censurados-à-esquerda}
+
 ```{r analise_elem,  results='hide'}
 corte_val = 70
 base <- base_sc
 res_val <- digeoqR::validacao_elementos(dir_out, base, corte_val)
 ```
+\
 
-### Elementos Válidos (grau de detecção >70%)
+#### Elementos Válidos (grau de detecção \>70%)
+
 ```{r elem_val, echo= FALSE }
 elem_val = res_val[[2]]
 rmarkdown::paged_table(data.frame('Elementos' = paste(elem_val, collapse=", ")))
 ```
 
-##
-### Número de dados válidos por analito
+## 
+
+#### Número de dados válidos por analito
 
 ```{r n_validos, echo = FALSE}
 nmld <- res_val[[1]][, c("elementos", "nneg")]
@@ -424,9 +1103,10 @@ colnames(nmld) <- c("Analito", "N. Válidos")
 rmarkdown::paged_table(nmld, 
                        options = list(rows.print = 9))
 ```
-## Análise dos valores ausentes {#análise-dos-valores-ausentes}
-##
-### Número de dados ausentes por analito
+
+## 
+
+#### Análise dos valores ausentes {#análise-dos-valores-ausentes}
 
 ```{r ausentes, echo = FALSE}
 nmna <- res_val[[1]][, c("elementos", "nna")]
@@ -435,7 +1115,7 @@ rmarkdown::paged_table(nmna,
                        options = list(rows.print = 9))
 ```
 
-## Testes estatísticos (dados brutos) {#testes-estatísticos}
+#### Testes estatísticos (dados brutos) {#testes-estatísticos}
 
 ```{r test_brutos, echo=FALSE, results='hide'}
 lito_bacia <- lito_bacia_sc; leg <- leg2; base <- base_sc
@@ -444,8 +1124,7 @@ teste_mtd_transf1 <-
   digeoqR::testes_estatisticos(dir_out, base, lito_bacia, mtd_transf = 1, nbc = 10, leg, elem_val )
 ```
 
-
-### Teste Shapiro-Wilker
+##### Teste Shapiro-Wilker
 
 ```{r vis_sw_brutos, echo=FALSE}
 
@@ -457,7 +1136,7 @@ rmarkdown::paged_table(teste_sw,
 
 ## 
 
-### Teste Lillie-Fors
+##### Teste Lillie-Fors
 
 ```{r lf_brutos, echo=FALSE}
 teste_lf <- teste_mtd_transf1[["test. norm. Lillie geral"]]
@@ -465,10 +1144,9 @@ rmarkdown::paged_table(teste_lf,
                        options = list(rows.print = 9, cols.print = 5))
 ```
 
-
 ## 
 
-### Teste Wilcoxon
+##### Teste Wilcoxon
 
 ```{r prep_vis_wilcoxon, results='hide'}
 vis_wilcolxon <- 
@@ -478,7 +1156,7 @@ vis_wilcolxon <-
 
 ## 
 
-#### Visualizaçao do teste Wilcoxon do Alumínio
+###### Visualizaçao do teste Wilcoxon do Alumínio
 
 ```{r vis_wx_al, echo = FALSE}
 gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],  
@@ -486,15 +1164,15 @@ gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],
                          top = grid::textGrob(""),
                          gp=gpar(fontsize=12,font=3))
 ```
+##
+#### QAQC das duplicatas de campo e replicatas de laborório {#qaqc-das-duplicatas-de-campo-e replicatas-de-laboratório}
 
-## QAQC das duplicatas de campo e replicatas de laborório {#qaqc-das-duplicatas-de-campo-e replicatas-de-laboratório}
-
--   Campo  
--   Laboratório  
+-   Campo\
+-   Laboratório
 
 ## 
 
-### Duplicatas de campo
+##### Duplicatas de campo
 
 ```{r qaqc_campo, results='hide'}
 base <- base_sc
@@ -504,7 +1182,7 @@ qaqc <- digeoqR::qaqc_gq(dir_out, base, tipo_am)
 
 ## 
 
-#### Gráfico Thompson-Howard
+###### Gráfico Thompson-Howard
 
 ```{r vis_TH_campo, echo=FALSE}
 gridExtra::grid.arrange(grobs=qaqc[["gráfico com texto"]]["Al"], ncol = 1)
@@ -512,7 +1190,7 @@ gridExtra::grid.arrange(grobs=qaqc[["gráfico com texto"]]["Al"], ncol = 1)
 
 ## 
 
-#### Tabela de precisão das duplicatas de campo
+###### Tabela de precisão das duplicatas de campo
 
 ```{r tab_precisao_campo, echo=FALSE}
 table_grid <- gridExtra::tableGrob(qaqc[["df tabela de precisão"]], rows = NULL, theme = gridExtra::ttheme_default(base_size = 20))
@@ -520,7 +1198,9 @@ gridExtra::grid.arrange(table_grid)
 ```
 
 ## 
-### Replicatas de laboratório
+
+##### Replicatas de laboratório
+
 ```{r qaqc_lab, results='hide'}
 base <- base_sc
 tipo_am = 2
@@ -529,9 +1209,7 @@ qaqc <- digeoqR::qaqc_gq(dir_out, base, tipo_am)
 
 ## 
 
-
-
-#### Gráfico Thompson-Howard
+###### Gráfico Thompson-Howard
 
 ```{r vis_TH_lab, echo=FALSE}
 gridExtra::grid.arrange(grobs=qaqc[["gráfico com texto"]]["Al"], ncol = 1)
@@ -539,16 +1217,17 @@ gridExtra::grid.arrange(grobs=qaqc[["gráfico com texto"]]["Al"], ncol = 1)
 
 ## 
 
-#### Tabela de precisão das replicatas de laboratório
+###### Tabela de precisão das replicatas de laboratório
 
 ```{r tab_precisao_lab, echo=FALSE}
 table_grid <- gridExtra::tableGrob(qaqc[["df tabela de precisão"]], rows = NULL, theme = gridExtra::ttheme_default(base_size = 20))
 gridExtra::grid.arrange(table_grid)
 ```
 
-## Estatística descritiva {#estatística-descritiva}
+##
+#### Estatística descritiva {#estatística-descritiva}
 
-### Geral
+##### Geral
 
 ```{r stat_geral, results='hide'}
 
@@ -565,7 +1244,7 @@ tabela_estat_g_sc <-
 
 ## 
 
-#### Visualização do sumário estatístico - Elementos
+###### Visualização do sumário estatístico - Elementos
 
 ```{r vis_sum_stat_geral1, echo=FALSE}
 stat_transposta_g_sc <- tabela_estat_g_sc[[1]]
@@ -576,7 +1255,7 @@ rmarkdown::paged_table(stat_transposta_g_sc, options = list(rows.print = 9, cols
 
 ## 
 
-#### Visualização do sumário estatístico - Parâmetros
+###### Visualização do sumário estatístico - Parâmetros
 
 ```{r vis_sum_stat_geral2, echo=FALSE}
 stat_normal_g_sc <- tabela_estat_g_sc[[2]]
@@ -585,7 +1264,7 @@ rmarkdown::paged_table(stat_normal_g_sc, options = list(rows.print = 9, cols.pri
 
 ## 
 
-### Agrupado
+##### Agrupado
 
 ```{r stat_unid, results='hide'}
 
@@ -600,7 +1279,7 @@ tabela_estat_a_sc <-
 
 ## 
 
-#### Visualização do sumário estatístico - Elementos
+###### Visualização do sumário estatístico - Elementos
 
 ```{r vis_sum_stat_unid1, echo=FALSE}
 
@@ -611,7 +1290,7 @@ rmarkdown::paged_table(stat_normal_a_sc, options = list(rows.print = 9, cols.pri
 
 ## 
 
-#### Visualização do sumário estatístico - Parâmetros
+###### Visualização do sumário estatístico - Parâmetros
 
 ```{r vis_sum_stat_unid2, echo=FALSE}
 stat_transposta_a_sc <- tabela_estat_a_sc[[1]]
@@ -623,7 +1302,121 @@ stat_transposta_a_sc <- stat_transposta_a_sc %>%
  dplyr::select(elementos) 
 rmarkdown::paged_table(stat_transposta_a_sc, options = list(rows.print = 9, cols.print = 5))
 ```
+##
+### Etapa IV Análise Exploratória dos dados
+  -   Classificação de todas as amostras
+  -   Classificação das amostras agrupadas por unidade geológica
+  -   Mapa geoquímico
+  
+##
+#### Classificação de todas as amostras
 
-# Etapa IV Classificação
+\
+Método de classificação: MAD
 
+```{r mad_tudo, eval = TRUE, echo=TRUE}
+cl_mtd_mad <- digeoqR::classifica_metodos(tipo_proc = 1, mtd_class = 1,
+                                          lito_bacia, elem_val, base, nbc = 10)
+```
 
+\
+Método de classificação: TIF
+
+```{r tif_tudo, eval = TRUE, echo=TRUE}
+cl_mtd_tif <- 
+  digeoqR::classifica_metodos(tipo_proc = 1, mtd_class = 2,
+                              lito_bacia, elem_val, base, nbc = 10)
+```
+
+\
+Método de classificação: C-A
+
+```{r , eval = TRUE, echo=TRUE}
+cl_mtd_ca <- 
+  digeoqR::classifica_metodos(tipo_proc = 1, mtd_class = 3,
+                              lito_bacia, elem_val, base, nbc = 10)
+```
+
+## 
+
+#### Classificação das amostras agrupadas por unidade geológica
+
+\
+Método de classificação: MAD
+
+```{r, eval = TRUE, echo=TRUE}
+cl_mtd_mad_un <- 
+  digeoqR::classifica_metodos(tipo_proc = 2, mtd_class = 1,
+                              lito_bacia, elem_val, base, nbc = 10)
+```
+
+\
+Método de classificação: TIF
+
+```{r, eval = TRUE, echo=TRUE}
+cl_mtd_tif_un <- 
+  digeoqR::classifica_metodos(tipo_proc = 2, mtd_class = 2,
+                              lito_bacia, elem_val, base, nbc = 10)
+```
+
+\
+Método de classificação: C-A
+
+```{r, eval = TRUE, echo=TRUE}
+cl_mtd_ca_un <- 
+  digeoqR::classifica_metodos(tipo_proc = 2, mtd_class = 3,
+                              lito_bacia, elem_val, base, nbc = 10)
+```
+
+## 
+
+##### Tabela de dados classificados ex: TIF - todas as amostras
+
+```{r}
+rmarkdown::paged_table(cl_mtd_tif)
+
+```
+
+## 
+
+#### Mapa Geoquímico - TIF
+
+```{r , echo=FALSE, eval=TRUE}
+
+names( modela_bacias_sc)
+
+bacias <- modela_bacias_sc[["bacias"]]
+
+dados_transf <- base_sc[[2]]
+
+litho_max <- lito_bacia_sc[[2]]
+
+ leg <- leg2
+ 
+ tipo_leg <- 2
+ 
+ info_bol <- quimica$`informação do boletim`
+
+```
+
+```{r mapa_tif, echo=TRUE, eval=TRUE, results='hide'}
+ mapas_tif_un <- 
+  digeoqR::mapa_tif_unidades(bacias, geologia, dados_transf,
+                             info_bol, litho_max, nbc=10,
+                             elem_val, tipo_leg, leg )
+
+```
+
+## 
+
+```{r, echo=FALSE, eval=TRUE}
+ plot(mapas_tif_un$mapas[[4]])
+```
+
+# 3. Fechamento
+
+-   Minhas impressões do uso do R.
+
+-   Qual os próximos passos?
+
+-   Feedback dos participantes.
