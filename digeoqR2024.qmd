@@ -58,6 +58,7 @@ Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-
 ::: {.column width="50%" style="font-size: 30px"}
 1.  [O que é R?](#r)
 
+    -   História do R
     -   Por que usar R?
     -   É útil programar?
     -   CRAN
@@ -104,21 +105,25 @@ Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-
 :::
 :::
 
-##
+## 
 
 ### O que é R? {#r}
 
-::: incremental
+::: {.incremental}
 -   R é uma linguagem de programação interpretada de código aberto. Não é compilada e é executada passo a passo por um programa que interpreta os resultados.
 
 -   R é uma linguagem de progamação orientada a manipulação de dados, análise estatística e visualização gráfica dos dados.
+:::
+
+## 
+
+#### História do R
 
 -   Em 1993 o R foi criado como um dialeto da linguagem S desenvolvida por [John Chambers](https://www.r-bloggers.com/2014/01/john-chambers-recounts-the-history-of-s-and-r/) e colaboradores.
 
 -   Os nomes importantes nesta história são muitos, mas os principais são: [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman/statistician) e [Ross Ihaka](https://www.stat.auckland.ac.nz/~ihaka/). A hitória do R pode ser vista [aqui](https://cran.r-project.org/doc/html/interface98-paper/paper_2.html).
 
--   Em 1995, [Martin Mächler](https://people.math.ethz.ch/~maechler/) deu uma contribuição importante ao convencer Ross e Robert a usar a Licença Pública Geral [GNU](https://gnu.org/licenses/gpl-3.0.html) (General Public Licenses) para tornar o R um software livre. A versão 1.0.0 do R só foi lançada em fevereiro de 2000.
-:::
+-   Em 1995, [Martin Mächler](https://people.math.ethz.ch/~maechler/) deu uma contribuição importante ao convencer Ross e Robert a usar a Licença Pública Geral [GNU](https://gnu.org/licenses/gpl-3.0.html) (General Public Licenses) para tornar o R um software livre. A versão 1.0.0 do R só foi lançada em fevereiro de 2000.\
 
 ## 
 
@@ -131,9 +136,9 @@ Algumas das muitas razões:
 
 2.  Funciona em múltiplas plataformas (Windows, MAC, Linux)
 
-3.  Replicabilidade
+3.  Replicabilidade dos procedimentos
 
-4.  Atualização das últimas técnicas estatísticas
+4.  Dispõe de modernas técnicas estatísticas
 
 5.  Está em constante desenvolvimento
 
@@ -207,7 +212,7 @@ Informações relevantes sobre R podem ser encontradas em:
 -   [R-blogger](https://www.r-bloggers.com/)
 :::
 
-##
+## 
 
 ### Instalação e estrutura {#instalacao-e-estrutura}
 
@@ -223,8 +228,13 @@ install.packages("installr")
 installr::updateR()
 ```
 
-## R online
--   Este modo de rodar o R é executado de maneira mais lenta, com pouco processamento e sem poder carregar pacotes: <https://rdrr.io/snippets/>
+## 
+
+#### R online
+
+-   No site rdrr.io tem o serviço [snippets](https://rdrr.io/snippets/) os códigos do R podem ser executados na internet, o limitante é que não se pode instalar novos pacotes lá e não há um modo privativo e seguro.
+
+-   O [RStudio Cloud](https://posit.cloud/plans/free) é um serviço gratuito oferecido pelo RStudio que permite aos usuários usar o R o RStudio on-line e colaborar em projetos com outros usuários através do site do RStudio Cloud. O limitante é que se for usar mais de 24h por mês passa a ser pago.
 
 ## 
 
@@ -268,29 +278,19 @@ Digite 'q()' para sair do R.
 
 ## 
 
-#### Painéis do RStudio
+#### Painéis do RStudio 
 
-+------------+-------------------------------------------------------------------------------------------+
-| Editor     | Local para desenvolvimento de scripts.                                                    |
-+------------+-------------------------------------------------------------------------------------------+
-| Console    | Imprime na tela as sentenças executadas a partir do editor ou diretamente no console      |
-+------------+-------------------------------------------------------------------------------------------+
-| Run        | Executa uma instrução do editor (Ctrl+Enter) onde está o cursor ou o que está selecionado |
-+------------+-------------------------------------------------------------------------------------------+
-| Enviroment | Lista todos os objetos gerados em cada sessão                                             |
-+------------+-------------------------------------------------------------------------------------------+
-| History    | Histórico de execução                                                                     |
-+------------+-------------------------------------------------------------------------------------------+
-| Terminal   | Um terminal para conectar ao Git, por exemplo, entre outras coisas                        |
-+------------+-------------------------------------------------------------------------------------------+
-| Files      | Arquivos (dados, script) podem ser pesquisados neste painel                               |
-+------------+-------------------------------------------------------------------------------------------+
-| Plot       | Imprime os gráficos                                                                       |
-+------------+-------------------------------------------------------------------------------------------+
-| Packages   | É um gerenciador de pacotes instalados                                                    |
-+------------+-------------------------------------------------------------------------------------------+
-| Help       | Ajuda rápida                                                                              |
-+------------+-------------------------------------------------------------------------------------------+
+```{r, echo=FALSE, eval=TRUE}
+painel <- c("Editor", "Console", "Run", "Enviroment", "History", 
+  "Terminal", "Files", "Plot", "Packages", "Help")
+descricao <- c("Local para desenvolvimento de scripts", "Imprime na tela as sentenças executadas a partir do editor ou diretamente no console", "Executa uma instrução do editor (Ctrl+Enter) onde está o cursor ou o que está selecionado", "Lista todos os objetos gerados em cada sessão", "Histórico de execução", "Um terminal para conectar ao Git, por exemplo, entre outras coisas", "Arquivos (dados, script) podem ser pesquisados neste painel", "Imprime os gráficos", "É um gerenciador de pacotes instalados", "Ajuda rápida")
+
+df <- data.frame(Painel = painel, Descrição = descricao)
+kableExtra::kable(df, booktabs = TRUE) %>%
+  kableExtra::kable_styling(font_size = 30)
+```
+
+
 
 ## 
 
@@ -334,27 +334,29 @@ Sys.info() ## Informação do sistema operacional
 
 #### Importância do uso de scripts
 
-Um script é um arquivo de texto que contém um conjunto de comandos ou instruções. Esses comandos e instruções são executados sequencialmente no R.
+Um script é um arquivo de texto que contém um conjunto de comandos ou instruções. Esses comandos e instruções são executados sequencialmente no R.\
 
-::: {.incremental style="line-height: 1.8"}
--   **Preparação**: para criar esses arquivos é importante para ter um histórico de trabalho.\
+::: {.incremental}
+-   **Preparação**: para criar esses arquivos é importante para ter um histórico de trabalho.
 
--   **Arquivo:** O nome do arquivo deve ser suficientemente claro para refletir o conteúdo e encontrá-lo facilmente. Se possível deve ser curto e evitar o uso de `"."` .\
+-   **Arquivo:** O nome do arquivo deve ser suficientemente claro para refletir o conteúdo e encontrá-lo facilmente. Se possível deve ser curto e evitar o uso de `"."` .
 
--   **Documentação**: É muito importante comentar as operações ou funções utilizadas para poder replicar com facilidade o trabalho. Os comentários devem começar com `"#"`.\
+-   **Documentação**: É muito importante comentar as operações ou funções utilizadas para poder replicar com facilidade o trabalho. Os comentários devem começar com `"#"`.
 :::
 
+##
+#### Comentários nos scripts
 ```{r, echo = TRUE, results='hide'}
 X <- c(1, 8, 19)
 # O objeto 'X' é um vetor de três números. 
 # Isto é um comentário
 ```
 
-##
+## 
 
 ### Estilos de programação {#estilo_de_programacao}
 
-Existem diferentes maneiras de program,ar. É importante ser cuidadoso na maneira de escrever seu código para que seja fácil replicar e ler o código.\
+Existem diferentes maneiras de programar. É importante ser cuidadoso na maneira de escrever seu código para que seja fácil replicar e ler o código.\
 
 ```{r, eval=FALSE, echo=TRUE}
 ## Mal escrito
@@ -378,7 +380,8 @@ media <- function(x) {
 
 -   Guia de estilo de Google [aqui](https://google.github.io/styleguide/Rguide.html)
 
-##
+## 
+
 ### Pacotes {#pacotes}
 
 Um pacote é constituído por um conjunto de funções e arquivos de dados, devidamente documentados, que implementam uma ou mais técnicas para tratamento e análise de dados.
@@ -435,6 +438,8 @@ A lista de pacotes anexados e objetos é alterada com o carregamento de um pacot
 search()
 ```
 
+## 
+
 #### Estado após carregar um pacote
 
 ```{r, echo=TRUE}
@@ -450,7 +455,8 @@ search()
 -   [Lista de pacotes por área](https://cran.r-project.org/web/views/)
 -   [Pacotes mais baixados](https://www.r-pkg.org/downloaded)
 
-##
+## 
+
 ### Ajuda {#ajuda-em-r}
 
 #### Conseguindo ajuda por si só
@@ -484,23 +490,23 @@ vignette(all=TRUE) # Mostra todas as vinhetas disponíveis na tela
 
 #### Elementos da ficha técnica de uma função
 
-+--------------+------------------------------------------------+-------------------------------------------------------------------------+
-|              | Name:                                          | o nome da função (entre chaves `{}` o pacote ao qual pertence a função) |
-+--------------+------------------------------------------------+-------------------------------------------------------------------------+
-| Description: | Breve descrição da função                      |                                                                         |
-+--------------+------------------------------------------------+-------------------------------------------------------------------------+
-| Usage:       | Sintaxe da função                              |                                                                         |
-+--------------+------------------------------------------------+-------------------------------------------------------------------------+
-| Arguments:   | Argumentos                                     |                                                                         |
-+--------------+------------------------------------------------+-------------------------------------------------------------------------+
-| Value:       | Valores                                        |                                                                         |
-+--------------+------------------------------------------------+-------------------------------------------------------------------------+
-| References:  | Referências                                    |                                                                         |
-+--------------+------------------------------------------------+-------------------------------------------------------------------------+
-| See Also:    | Funções relacionadas                           |                                                                         |
-+--------------+------------------------------------------------+-------------------------------------------------------------------------+
-| Examples:    | Exemplos de como se usa a função               |                                                                         |
-+--------------+------------------------------------------------+-------------------------------------------------------------------------+
++--------------+-------------------------------------------------------------------------+
+| Name:        | o nome da função (entre chaves `{}` o pacote ao qual pertence a função) |
++--------------+-------------------------------------------------------------------------+
+| Description: | Breve descrição da função                                               |
++--------------+-------------------------------------------------------------------------+
+| Usage:       | Sintaxe da função                                                       |
++--------------+-------------------------------------------------------------------------+
+| Arguments:   | Argumentos                                                              |
++--------------+-------------------------------------------------------------------------+
+| Value:       | Valores                                                                 |
++--------------+-------------------------------------------------------------------------+
+| References:  | Referências                                                             |
++--------------+-------------------------------------------------------------------------+
+| See Also:    | Funções relacionadas                                                    |
++--------------+-------------------------------------------------------------------------+
+| Examples:    | Exemplos de como se usa a função                                        |
++--------------+-------------------------------------------------------------------------+
 
 ## 
 
@@ -516,36 +522,41 @@ De maneira geral se destacam estas páginas:
 
 <https://rseek.org/>
 
-[https://stackover ow.com/questions/tagged/r](https://stackover%20ow.com/questions/tagged/r)
+<<https://stackoverflow.com/questions/tagged/r>>
 
 <https://stats.stackexchange.com/questions/tagged/r>
 
-##
+## 
+
 ### Iniciar uma sessão no R {#iniciar-sessao-no-r}
 
 #### Comandos básicos (I)
 
 ```{r, echo=TRUE}
-ls() # lista os objetos que estão na memória em ".GlobalEnv"
+ls() # lista os objetos na memória
 ```
+
+\
 
 ```{r, echo=TRUE}
 y <- c(1, 5, 9) # cria um objeto que contem 3 números
 y
 ```
 
-```{r}
-ls()
-```
+##
 
 ```{r, echo=TRUE, eval=FALSE}
 rm(y) # elimina (remove) o objeto 
 
 ```
 
+\
+
 ```{r, echo=TRUE, eval=TRUE}
 objects() # idem ls()
 ```
+
+\
 
 ```{r, echo=TRUE}
 rm(list=ls(all=TRUE)) # elimina todos os objetos da sessão de trabalho
@@ -555,13 +566,15 @@ rm(list=ls(all=TRUE)) # elimina todos os objetos da sessão de trabalho
 
 #### Alguns comandos básicos (II)
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=TRUE, eval=FALSE}
 setwd() # establece directorio de trabajo
 getwd() # devuelve la ruta actual
 dir() # lista os arquivos no diretório
 list.files() # idem anterior
 dir.create() # cria um diretório
 ```
+
+##
 
 ##### Exemplos
 
@@ -577,11 +590,6 @@ directorio2 <- "../Curso_R/Plots"
 setwd(directorio2)
 ```
 
-## 
-
-##### Exemplos
-
-Este fluxo de trabalho tem seus problemas (ver esta discussão e estes pacotes: [aqui](https://cran.r-project.org/web/packages/here/index.html) e [rprojroot](https://cran.r-project.org/web/packages/rprojroot/index.html)
 
 ## 
 
@@ -594,11 +602,12 @@ names(options())
 ```
 
 ## 
+#### `options()`
 
-A função `options()` permite o usuário definir e examinar opções globais.\
-As opções afetam a maneira como R calcula e exibe seus resultados.
+argumento `digits`\
 
-`digits`: número de digitos significativos a serem impressos
+Descrição: Número de digitos significativos a serem impressos
+\
 
 ```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1|4-5"}
 100/654
@@ -610,9 +619,11 @@ options(digits = 4)
 ```
 
 ## 
+#### `options()`
 
-`width`: Lagura do texto de saída
-
+Argumento: `width`\
+Descrição: Lagura do texto de saída
+\
 ```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1-2|5-7"}
 set.seed(1234)
 rnorm(8)
@@ -666,48 +677,65 @@ Quando se usa uma função:
 -   Os argumentos que tem valores incorretos podem não ser chamados quando a função é executada.
 -   Os argumentos tem uma ordem que deve ser seguida se o usuário optar por não nomeá-los.
 -   Os argumentos podem ser colocados em ordem personalizada mas devem ser nomeados.\
-    \
-    Todas estas opções geram o mesmo resultado:\
+  
+##
 
-```{r, echo= TRUE, eval=FALSE}
+Todas estas opções geram o mesmo resultado:\
+
+```{r, echo= TRUE, eval=TRUE}
 mean(x = 1:10)
 mean(1:10)
 mean(x = c(1:10, NA), trim = 0, na.rm = TRUE)
 mean(trim = 0, x = c(1:10, NA), na.rm = TRUE)
 mean(c(1:10, NA), 0, TRUE)
-## [1] 5.5
+
 ```
-##
+
+## 
+
 ### Referências extras {#sec-referências}
 
-::: incremental
+::: {.incremental}
 -   The R Foundation \[homepage on the Internet\]. Vienna, Austria: R Foundation for Statistical Computing. The R Project for Statistical Computing. Available from: [» https://www.r-project.org](https://www.r-project.org/)
 
 -   Grolemund G. Hands-On Programming with R \[monograph on the Internet\]. Sebastopol, CA: O’Reilly Media; 2014. Available from: [» https://rstudio-education.github.io/hopr](https://rstudio-education.github.io/hopr)
+
+
+-   [Introdução à análise de dados com R](https://datawithr.com/)
+
+-   [Data Skills](https://psyteachr.github.io/data-skills-v1/index.html)
+
+-   [R for Data Science](https://r4ds.had.co.nz/)
+
+-   [R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/)
+
 :::
 
 ## 2. Uso do R no levantamento geoquímico
 
--   Etapa I - Planejamento das estações de coleta
+::: {.incremental}
 
--   Etapa II - Organização dos dados do Levantamento Geoquímico
+-   Etapa I - Planejamento das estações de coleta\
+\
+-   Etapa II - Organização dos dados do Levantamento Geoquímico\
+\
+-   Etapa III - Avaliação dos dados analíticos\
+\
+-   Etapa IV - Análise exploratória dos dados\
+:::
 
--   Etapa III - Avaliação dos dados analíticos
-
--   Etapa IV - Análise exploratória dos dados
-
-##
+## 
 
 ### Etapa I planejamento de estações
+::: {.incremental}
 
--   [Trabalhando com feições espaciais](#trabalhando-com-feições-espaciais)
--   [Importando a imagem SRTM](#importando-a-imagem-srtm)
--   [Planejando as estações de coleta](#planejando-as-estações-de-coleta)
--   [Mapa das estações planejadas](#mapa-das-estações-planejadas)
--   [Modelagem das bacias e validação das estações planejadas](#modelagem-das-bacias-e-validação-das-estações-planejadas)
--   [Mapa de planejamento validado](#mapa-de-planejamento_validado)
+-   [Trabalhando com feições espaciais](#trabalhando-com-feições-espaciais)\
+-   [Importando a imagem SRTM](#importando-a-imagem-srtm)\
+-   [Planejando as estações de coleta](#planejando-as-estações-de-coleta)\
+-   [Modelagem das bacias e validação das estações planejadas](#modelagem-das-bacias-e-validação-das-estações-planejadas)\
+:::
+
 ##
-
 #### Trabalhando com feições espaciais {#trabalhando-com-feições-espaciais}
 
 ```{r var1, echo=FALSE}
@@ -733,34 +761,56 @@ dir_os <- "inputs/os/"
 
 ```{r feicoes_model, results='hide'}
 bases_model <-
-  digeoqR::gera_bases_model(dir_in, limite,
-                            limite_srtm, area_urbana,
-                            rios, massa_dagua)
+  digeoqR::gera_bases_model(dir_in, 
+                            limite,
+                            limite_srtm, 
+                            area_urbana,
+                            rios,
+                            massa_dagua)
 ```
-##
+
+## 
+
 #### Importando a imagem SRTM {#importando-a-imagem-srtm}
 
 ```{r srtm, message = FALSE, results='hide'}
-dem <- digeoqR::prepara_dem()
+dem <- digeoqR::prepara_dem(dir_in = "inputs/campo/",
+                            limite_srtm = "area_srtm.shp",
+                            dir_out = "outputs/",
+                            EPSG = 4326,
+                            z = 11)
 ```
 ##
+
+```{r, eval=TRUE, echo=FALSE}
+plot(dem, main = "SRTM", col=topo.colors(300))
+```
+
+## 
+
 #### Planejando as estações de coleta {#planejando-as-estações-de-coleta}
 
 ```{r plan, results='hide'}
  gera_est <- 
- digeoqR::gera_estacoes(dem, dir_out, 
+  digeoqR::gera_estacoes(dem, 
+                        dir_out, 
                         bases_model, 
-                        EPSG, threshold, 
+                        EPSG, 
+                        threshold, 
                         min_length, 
-                        max_ordem, wbt_wd) 
+                        max_ordem, 
+                        wbt_wd) 
 ```
-##
-#### Mapa das estações planejadas {#mapa-das-estações-planejadas}
+
+## 
+
+#### Mapa das estações planejadas
 
 ```{r mapa_est_plan, echo=FALSE}
 plot(gera_est$mapa)
 ```
-##
+
+## 
 
 #### Modelagem das bacias e validação das estações planejadas {#modelagem-das-bacias-e-validação-das-estações-planejadas}
 
@@ -769,22 +819,37 @@ fase <- 1
 classe_am <- 2
 
 modela_bacias_plan <-
-  digeoqR::modela_bacias(fase, EPSG, dem, bases_model, 
-                         gera_est, ex_campo, classe_am, 
-                         bacia_minima, bacia_maxima, 
-                         threshold, snap_dist, 
-                         min_length, max_ordem, 
-                         dir_out, wbt_wd)
+  digeoqR::modela_bacias(fase, 
+                         EPSG, 
+                         dem, 
+                         bases_model, 
+                         gera_est, 
+                         ex_campo, 
+                         classe_am, 
+                         bacia_minima, 
+                         bacia_maxima, 
+                         threshold, 
+                         snap_dist, 
+                         min_length, 
+                         max_ordem, 
+                         dir_out,
+                         wbt_wd)
 
 ```
-##
+
+## 
+
 #### Mapa de planejamento validado {#mapa-de-planejamento_validado}
 
 ```{r plan_mapa, echo=FALSE}
 plot(modela_bacias_plan$`mapa plan`)
 ```
-##
+
+## 
+
 ### Etapa II Organização dos dados do Levantamento Geoquímico
+
+::: {.incremental}
 
 -   [Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD)](#importação-dos-dados-de-campo-fcampo-suvey123-qfield)
 
@@ -800,19 +865,24 @@ plot(modela_bacias_plan$`mapa plan`)
 
 -   [Organização os dados analíticos](#organização-dos_dados_analíticos)
 
--   [Enriquecimento as bases com feições espaciais (geologia)](#enriquecimento-das-bases-com-feições-espaciais-geologia)
+-   [Enriquecimento as bases com feições espaciais (geologia)](#enriquecimento-das-bases-com-feições-espaciais-geologia) 
+:::
 ##
+
 #### Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD) {#importação-dos-dados-de-campo-fcampo-suvey123-qfield}
 
 ```{r dados_campo, results='hide'}
-ex_campo <- digeoqR::extrai_dados_campo(tipo_base,
-                                        dir_in,
-                                        base_campo,
-                                        dir_os,
-                                        EPSG,
-                                        dir_out)
+ex_campo <- 
+  digeoqR::extrai_dados_campo(tipo_base, 
+                              dir_in, 
+                              base_campo,
+                              dir_os,
+                              EPSG,
+                              dir_out)
 ```
-##
+
+## 
+
 #### Modelagem das bacias amostradas {#modelagem-das-bacias-amostradas}
 
 -   Sedimento de corrente\
@@ -828,11 +898,21 @@ fase <- 2
 classe_am <- 2
 
 modela_bacias_sc <-
-  digeoqR::modela_bacias(fase, EPSG, dem, bases_model, 
-                         gera_est, ex_campo, classe_am, 
-                         bacia_minima, bacia_maxima, 
-                         threshold, snap_dist, min_length, 
-                         max_ordem, dir_out, wbt_wd)
+  digeoqR::modela_bacias(fase, 
+                         EPSG, 
+                         dem, 
+                         bases_model, 
+                         gera_est, 
+                         ex_campo, 
+                         classe_am, 
+                         bacia_minima, 
+                         bacia_maxima, 
+                         threshold, 
+                         snap_dist, 
+                         min_length, 
+                         max_ordem, 
+                         dir_out, 
+                         wbt_wd)
 ```
 
 ## 
@@ -845,13 +925,25 @@ fase <- 2
 classe_am <- 1
 
 modela_bacias_cb <-
-  digeoqR::modela_bacias(fase, EPSG, dem, bases_model, 
-                         gera_est, ex_campo, classe_am, 
-                         bacia_minima, bacia_maxima, 
-                         threshold, snap_dist, min_length, 
-                         max_ordem, dir_out, wbt_wd)
+  digeoqR::modela_bacias(fase, 
+                         EPSG, 
+                         dem, 
+                         bases_model, 
+                         gera_est, 
+                         ex_campo, 
+                         classe_am, 
+                         bacia_minima, 
+                         bacia_maxima, 
+                         threshold, 
+                         snap_dist, 
+                         min_length, 
+                         max_ordem, 
+                         dir_out, 
+                         wbt_wd)
 ```
-##
+
+## 
+
 #### Visualização do mapa de estações amostradas e bacias {#visualização-do-mapa-de-estações-amostradas-e-bacias}
 
 -   Sedimento de corrente\
@@ -872,7 +964,9 @@ plot(modela_bacias_sc$`mapa amostragem`)
 ```{r mapa_am_cb, echo=FALSE}
 plot(modela_bacias_cb$`mapa amostragem`)
 ```
-##
+
+## 
+
 #### Importação dos dados analíticos {#importação-dos-dados-analíticos}
 
 Nessa rotina os dados dos boletins são lidos e arrumados em dois formatos:\
@@ -890,8 +984,10 @@ dir_ucc <- "inputs/quimica/"; ref_ucc <- "ucc.csv";
 classe_am <- 2
 
 quimica <- 
-  digeoqR::le_boletim_quimica(classe_am, dir_bol,
-                              dir_ucc, ref_ucc)
+  digeoqR::le_boletim_quimica(classe_am, 
+                              dir_bol,
+                              dir_ucc, 
+                              ref_ucc)
 ```
 
 ## 
@@ -905,7 +1001,8 @@ mineral <-
   digeoqR::le_boletim_mineral(dir_bol)
 ```
 
-##
+## 
+
 #### Organização dos dados analíticos {#organização-dos_dados_analíticos}
 
 ##### Sedimento de corrente
@@ -917,9 +1014,12 @@ analise <- 2
 classe_am <- 2
 
 base_sc <- 
-  digeoqR::prepara_bases(dir_bol, classe_am, 
-                         analise,quimica, 
-                         mineral, ex_campo)
+  digeoqR::prepara_bases(dir_bol, 
+                         classe_am, 
+                         analise,
+                         quimica, 
+                         mineral, 
+                         ex_campo)
 ```
 
 ## 
@@ -941,9 +1041,12 @@ dir_bol <- "inputs/mineral/B/"
 analise <- 1
 classe_am <- 1
 base_cb <- 
-  digeoqR::prepara_bases(dir_bol, classe_am, 
-                         analise,quimica, 
-                         mineral, ex_campo)
+  digeoqR::prepara_bases(dir_bol, 
+                         classe_am, 
+                         analise,
+                         quimica, 
+                         mineral, 
+                         ex_campo)
 ```
 
 ## 
@@ -954,7 +1057,9 @@ base_cb <-
 dados_cb <- base_cb[["dados brutos"]]
 rmarkdown::paged_table(dados_cb, options = list(rows.print = 9, cols.print = 5))
 ```
-##
+
+## 
+
 #### Enriquecimento das bases com feições espaciais (geologia) {#enriquecimento-das-bases-com-feições-espaciais-geologia}
 
 -   Extrai dados xml cores da layer (QGIS)\
@@ -994,9 +1099,12 @@ dir_in <- "inputs/campo/"; area <- "area_srtm"
 chave <- "RANGE"
 
 geologia <- 
-  digeoqR::recorta_feicao_area(dir_in, dir_out, 
-                               area, feicao_in,
-                               feicao_out, chave)
+  digeoqR::recorta_feicao_area(dir_in, 
+                               dir_out, 
+                               area, 
+                               feicao_in,
+                               feicao_out, 
+                               chave)
 ```
 
 ## 
@@ -1046,14 +1154,19 @@ tipo_leg <- 2
 
 lito_bacia_sc <-
   digeoqR::intersecta_bacias(dir_in,
-                             dir_out, bases_model,
-                             bacias, feicao_rec,
-                             tipo_leg, estacoes,
-                             classe_am, nome_xml)
+                             dir_out, 
+                             bases_model,
+                             bacias, 
+                             feicao_rec,
+                             tipo_leg, 
+                             estacoes,
+                             classe_am, 
+                             nome_xml)
    
 ```
 
-##
+## 
+
 ### Etapa III Avaliação dos dados analíticos
 
 -   [Análise dos dados censurados à esquerda](#dados-censurados-à-esquerda)
@@ -1070,22 +1183,30 @@ lito_bacia_sc <-
     -   Duplicatas de campo\
     -   Replicatas de laboratório
 
--   [Estatística descritiva](#estatística-descritiva) \##
-##
+-   [Estatística descritiva](#estatística-descritiva) 
+
+## 
+
+
 #### Análise dos dados censurados à esquerda {#análise-dos-dados-censurados-à-esquerda}
 
 ```{r analise_elem,  results='hide'}
 corte_val = 70
 base <- base_sc
-res_val <- digeoqR::validacao_elementos(dir_out, base, corte_val)
+res_val <- 
+  digeoqR::validacao_elementos(dir_out, 
+                               base, 
+                               corte_val)
 ```
-\
 
+
+##
 #### Elementos Válidos (grau de detecção \>70%)
 
 ```{r elem_val, echo= FALSE }
 elem_val = res_val[[2]]
-rmarkdown::paged_table(data.frame('Elementos' = paste(elem_val, collapse=", ")))
+
+rmarkdown::paged_table(data.frame(Elementos = elem_val))
 ```
 
 ## 
@@ -1110,13 +1231,20 @@ rmarkdown::paged_table(nmna,
                        options = list(rows.print = 9))
 ```
 
+##
 #### Testes estatísticos (dados brutos) {#testes-estatísticos}
 
 ```{r test_brutos, echo=FALSE, results='hide'}
 lito_bacia <- lito_bacia_sc; leg <- leg2; base <- base_sc
 
 teste_mtd_transf1 <-
-  digeoqR::testes_estatisticos(dir_out, base, lito_bacia, mtd_transf = 1, nbc = 10, leg, elem_val )
+  digeoqR::testes_estatisticos(dir_out, 
+                               base, 
+                               lito_bacia, 
+                               mtd_transf = 1, 
+                               nbc = 10, 
+                               leg, 
+                               elem_val )
 ```
 
 ##### Teste Shapiro-Wilker
@@ -1159,7 +1287,9 @@ gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],
                          top = grid::textGrob(""),
                          gp=gpar(fontsize=12,font=3))
 ```
-##
+
+## 
+
 #### QAQC das duplicatas de campo e replicatas de laborório {#qaqc-das-duplicatas-de-campo-e replicatas-de-laboratório}
 
 -   Campo\
@@ -1172,7 +1302,9 @@ gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],
 ```{r qaqc_campo, results='hide'}
 base <- base_sc
 tipo_am = 1
-qaqc <- digeoqR::qaqc_gq(dir_out, base, tipo_am)
+qaqc <- digeoqR::qaqc_gq(dir_out, 
+                         base, 
+                         tipo_am)
 ```
 
 ## 
@@ -1219,7 +1351,8 @@ table_grid <- gridExtra::tableGrob(qaqc[["df tabela de precisão"]], rows = NULL
 gridExtra::grid.arrange(table_grid)
 ```
 
-##
+## 
+
 #### Estatística descritiva {#estatística-descritiva}
 
 ##### Geral
@@ -1232,8 +1365,10 @@ tipo_proc <- 1
 
 tabela_estat_g_sc <- 
   digeoqR::tabela_estatistica(tipo_proc,
-                              rotulo_lito, base,
-                              lista_legenda, dir_out)
+                              rotulo_lito, 
+                              base,
+                              lista_legenda, 
+                              dir_out)
 
 ```
 
@@ -1268,7 +1403,9 @@ tipo_proc = 2
 tabela_estat_a_sc <-
   digeoqR::tabela_estatistica(tipo_proc,
                               rotulo_lito,
-                              base, lista_legenda, dir_out)
+                              base, 
+                              lista_legenda, 
+                              dir_out)
 
 ```
 
@@ -1297,55 +1434,75 @@ stat_transposta_a_sc <- stat_transposta_a_sc %>%
  dplyr::select(elementos) 
 rmarkdown::paged_table(stat_transposta_a_sc, options = list(rows.print = 9, cols.print = 5))
 ```
-##
-### Etapa IV Análise Exploratória dos dados
-  -   Classificação de todas as amostras
-  -   Classificação das amostras agrupadas por unidade geológica
-  -   Mapa geoquímico
-  
-##
-#### Classificação de todas as amostras
 
-\
+## 
+
+### Etapa IV Análise Exploratória dos dados
+
+-   Classificação de todas as amostras
+-   Classificação das amostras agrupadas por unidade geológica
+
+
+## 
+
+#### Classificação de todas as amostras
 Método de classificação: MAD
 
 ```{r mad_tudo, eval = TRUE, echo=TRUE}
-cl_mtd_mad <- digeoqR::classifica_metodos(tipo_proc = 1, mtd_class = 1,
-                                          lito_bacia, elem_val, base, nbc = 10)
+cl_mtd_mad <- digeoqR::classifica_metodos(tipo_proc = 1, 
+                                          mtd_class = 1,
+                                          lito_bacia, 
+                                          elem_val, 
+                                          base, 
+                                          nbc = 10)
 ```
 
-\
+##
+#### Classificação de todas as amostras
 Método de classificação: TIF
 
 ```{r tif_tudo, eval = TRUE, echo=TRUE}
 cl_mtd_tif <- 
-  digeoqR::classifica_metodos(tipo_proc = 1, mtd_class = 2,
-                              lito_bacia, elem_val, base, nbc = 10)
+  digeoqR::classifica_metodos(tipo_proc = 1, 
+                              mtd_class = 2,
+                              lito_bacia, 
+                              elem_val, 
+                              base, 
+                              nbc = 10)
 ```
 
-\
+##
+#### Classificação de todas as amostras
 Método de classificação: C-A
 
 ```{r , eval = TRUE, echo=TRUE}
 cl_mtd_ca <- 
-  digeoqR::classifica_metodos(tipo_proc = 1, mtd_class = 3,
-                              lito_bacia, elem_val, base, nbc = 10)
+  digeoqR::classifica_metodos(tipo_proc = 1, 
+                              mtd_class = 3,
+                              lito_bacia, 
+                              elem_val, 
+                              base, 
+                              nbc = 10)
 ```
 
 ## 
 
 #### Classificação das amostras agrupadas por unidade geológica
 
-\
 Método de classificação: MAD
 
 ```{r, eval = TRUE, echo=TRUE}
 cl_mtd_mad_un <- 
-  digeoqR::classifica_metodos(tipo_proc = 2, mtd_class = 1,
-                              lito_bacia, elem_val, base, nbc = 10)
+  digeoqR::classifica_metodos(tipo_proc = 2, 
+                              mtd_class = 1,
+                              lito_bacia, 
+                              elem_val, 
+                              base, 
+                              nbc = 10)
 ```
 
-\
+##
+#### Classificação das amostras agrupadas por unidade geológica
 Método de classificação: TIF
 
 ```{r, eval = TRUE, echo=TRUE}
@@ -1354,60 +1511,38 @@ cl_mtd_tif_un <-
                               lito_bacia, elem_val, base, nbc = 10)
 ```
 
-\
+##
+#### Classificação das amostras agrupadas por unidade geológica
 Método de classificação: C-A
 
 ```{r, eval = TRUE, echo=TRUE}
 cl_mtd_ca_un <- 
-  digeoqR::classifica_metodos(tipo_proc = 2, mtd_class = 3,
-                              lito_bacia, elem_val, base, nbc = 10)
+  digeoqR::classifica_metodos(tipo_proc = 2, 
+                              mtd_class = 3,
+                              lito_bacia, 
+                              elem_val, 
+                              base, 
+                              nbc = 10)
 ```
 
 ## 
 
 ##### Tabela de dados classificados ex: TIF - todas as amostras
 
-```{r}
-rmarkdown::paged_table(cl_mtd_tif)
+```{r, eval=TRUE, echo=FALSE}
+rmarkdown::paged_table(head(cl_mtd_tif) )
 
 ```
 
-## 
+##
+##### Tabela de dados classificados ex: TIF - por unidades
 
-#### Mapa Geoquímico - TIF
-
-```{r , echo=FALSE, eval=TRUE}
-
-names( modela_bacias_sc)
-
-bacias <- modela_bacias_sc[["bacias"]]
-
-dados_transf <- base_sc[[2]]
-
-litho_max <- lito_bacia_sc[[2]]
-
- leg <- leg2
- 
- tipo_leg <- 2
- 
- info_bol <- quimica$`informação do boletim`
+```{r, eval=TRUE, echo=FALSE}
+rmarkdown::paged_table(head(cl_mtd_tif_un))
 
 ```
 
-```{r mapa_tif, echo=TRUE, eval=TRUE, results='hide'}
- mapas_tif_un <- 
-  digeoqR::mapa_tif_unidades(bacias, geologia, dados_transf,
-                             info_bol, litho_max, nbc=10,
-                             elem_val, tipo_leg, leg )
-
-```
-
-## 
-
-```{r, echo=FALSE, eval=TRUE}
- plot(mapas_tif_un$mapas[[4]])
-```
-
+##
 ## 3. Fechamento
 
 -   Minhas impressões do uso do R.
