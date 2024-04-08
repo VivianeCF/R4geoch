@@ -548,7 +548,7 @@ RSiteSearch("glm") # Busca os manuais e arquivos de ajuda da web
 # R-project
 
 find("mean") # Devolve o pacote o qual pertenece a função.
-# (el pacote deve estar carregado: library())
+# (o pacote deve estar carregado: library())
 
 example(contour) # Executa os exemplos disponíveis da função
 
@@ -840,7 +840,7 @@ tipo_base <- 1
 base_campo <- "fcampo"
 dir_os <- "inputs/os/" 
 ```
-
+Descrição: Converte as bases de entrada em uma lista de dados para serem carregadas nas funções modela_bacias e gera estações.
 ```{r feicoes_model, results='hide'}
 bases_model <-
   digeoqR::gera_bases_model(dir_in, 
@@ -862,7 +862,7 @@ dir_out <- "outputs/"
 EPSG <- 4326
 z <- 11
 ```
-
+**Descrição**: Recupera dados de elevação do terreno da [Amazon Web Services Terrain Tile](https://registry.opendata.aws/terrain-tiles). Para mais detalhes visite o [repositório](https://github.com/jhollist/elevatr)
 ```{r srtm, message = FALSE, results='hide'}
 dem <- digeoqR::prepara_dem(dir_in,
                             limite_srtm,
@@ -882,7 +882,7 @@ plot(dem, main = "", col=topo.colors(300))
 ## 
 
 #### Planejando as estações de coleta {#planejando-as-estações-de-coleta}
-
+**Descrição**: Desenvolvido para automatizar o processo de escolha do locais de amostragem que devem ser a 100 m acima dos pontos de confluência dos rios. Também são excluídos locais nas áreas urbanas e de massa d'água. Todos os arquivos devem ser no formato shapefile.
 ```{r plan, results='hide'}
  gera_est <- 
   digeoqR::gera_estacoes(dem, 
@@ -911,7 +911,7 @@ plot(gera_est$mapa)
 fase <- 1
 classe_am <- 2
 ```
-
+**Descrição**: A partir da imagem SRTM, rios, massa d'água é gerado um modelo de drenagem. A densidade de drenagem é dada pelo valor de threshold, quanto maior este valor, menor a densidade dos cursos dos rios. Após isto são geradas as bacias de cada estação de coleta planejada.
 ```{r model_bacias_plan, results='hide'}
 modela_bacias_plan <-
   digeoqR::modela_bacias(fase, 
@@ -965,7 +965,7 @@ plot(modela_bacias_plan$`mapa plan`)
 ## 
 
 #### Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD) {#importação-dos-dados-de-campo-fcampo-suvey123-qfield}
-
+**Descrição**: Uma base de dados é preparada com as informações da localização das amostras e os nomes de campo e laboratório. Esta função está implementada para diferentes bases de dados: FCAMPO, SURVEY123 e QFIELD. Usa as planilhas de OS (Ordem de Serviço) para recuperar a relação número de campo e número de laboratório.
 ```{r dados_campo, results='hide'}
 ex_campo <- 
   digeoqR::extrai_dados_campo(tipo_base, 
@@ -981,7 +981,9 @@ ex_campo <-
 #### Modelagem das bacias amostradas {#modelagem-das-bacias-amostradas}
 
 -   Sedimento de corrente\
--   Concentrado de bateia
+-   Concentrado de bateia\
+\
+**Descrição**: A partir da imagem SRTM, rios, massa d'água é gerado um modelo de drenagem. A densidade de drenagem é dada pelo valor de threshold, quanto maior este valor, menor a densidade dos cursos dos rios. Após isto são geradas as bacias de cada estação de coleta.
 
 ## 
 
