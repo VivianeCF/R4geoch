@@ -9,12 +9,13 @@ format:
     height: 900
     self-contained: true
     incremental: false
-    footer: "Slides [on GitHub](https://github.com/VivianeCF/R4geoch.git)."
+    footer: "Código dos slides [on GitHub](https://github.com/VivianeCF/R4geoch.git)."
     theme: ["custom.scss"]
     slide-number: c/t
     show-slide-number: all
     hash-type: number
     preview-links: false
+    code-line-numbers: false
 ---
 
 ```{r setup, include=FALSE}
@@ -310,7 +311,7 @@ Ao iniciar o R, aparecerá no console a versão que está em execução e o nome
 
 \
 
-```{r, echo=TRUE, eval = FALSE, `code-line-numbers`="1|3|6|9|11|14"}
+```{r, echo=TRUE, eval = FALSE, `code-line-numbers`="1|3-4|6-7|9|11-12|14"}
 R.Version() # Informação detalhada de versão do R
 
 R.Version()$version.string # Número e data da versão
@@ -419,7 +420,7 @@ library(digeoqR)
 Quase todas as funções do R seguem uma mesma estrutura. Este exemplo mostra uma função com dois argumentos:\
 \
 
-::: {style="font-size: 60px; text-align: center;"}
+::: {style="font-size: 50px; text-align: center;"}
 `nome_da_função(argumento1 = valor1, argumento2 = valor2)`
 :::
 
@@ -486,7 +487,7 @@ available.packages() # lista todos os pacotes disponíveis
 
 update.packages() # atualiza pacotes
 
-library(help="MASS") # Informação sobre um paquete específico
+library(help="MASS") # Informação sobre um pacote específico
 
 demo("graphics") # Demonstração de um pacote
 ```
@@ -526,7 +527,7 @@ search()
 
 #### Conseguindo ajuda por si só
 
-```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1|3|5|7|10|12|14|17|20|23|25|28"}
+```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1|3|5|7-8|10|12|14-15|17-18|20-21|23|25-26|28"}
 help(lm) # Comando básico de busca
 
 ?lm # idem do anterior
@@ -555,8 +556,8 @@ browseVignettes() # Mostra na web as vinhetas disponíveis e o acesso
 # a elas. De um pacote: (package="package-name")
 
 vignette(all=TRUE) # Mostra todas as vinhetas disponíveis na tela
-```
 
+```
 
 ## 
 
@@ -585,7 +586,6 @@ vignette(all=TRUE) # Mostra todas as vinhetas disponíveis na tela
 ```{=html}
 <iframe width="1400" height="800"             src="images/mean.html" title="help example"></iframe>
 ```
-
 ## 
 
 #### Ajuda externa
@@ -729,12 +729,54 @@ rnorm(8)
 
 **Importante:**
 
--   Quando aparece uma mensagem de erro ou de alerta é preciso investigar!
+::: {.incremental}
+
+\
+
+-   Quando aparece uma mensagem de erro ou de alerta é preciso investigar!\
+
+\
 
 -   A principal diferença entre um erro e um aviso é que o erro não produz um nenhum resultado, enquanto um aviso o faz.\
 
+:::
+
 ## 
 
+### Código incompleto
+
+```{r, echo=TRUE, eval=FALSE}
+> objeto.1 <- seq(1, 30, 0.5)
+> plot(objeto.1
++
++ )
+>
+```
+
+::: {.incremental style="border:2px solid red;"}
+-   Em R o sinal "\>" no painel de console significa que o intérprete está pronto para receber ordens.
+
+-   Se após dar uma ordem aparecer o sinal "+", isso indica que é uma ordem incompleta. No exemplo acima falta fechar o parênteses da funão plot().
+
+-   Se teclar enter com uma função incompleta vai aparecer novamente o sinal "+", para sair tecle esc
+:::
+
+##
+### Dicas para o aprendizado do R
+\
+Dois conselhos do [Hadley Wickham](http://adv-r.had.co.nz/Introduction.html) para aprender e melhorar a programação em R:\
+\
+
+
+::: {.incremental style="padding:30px;border:2px solid red;"}
+1.  Leia código fonte. Busque os pacotes ou as funções que você usa com mais frequência e veja como estão escritas.\
+\
+2.  Adote uma mentalidade científica. Se não compreender como funciona algo, desenvolva uma hipótese, desenhe alguns experimentos, execute-os e registre seus resultados.\
+
+:::
+
+
+##
 ### Referências extras {#sec-referências}
 
 ::: incremental
@@ -765,7 +807,7 @@ rnorm(8)
 
 ## 
 
-### Etapa I planejamento de estações
+### Etapa I Planejamento de estações
 
 ::: incremental
 -   [Trabalhando com feições espaciais](#trabalhando-com-feições-espaciais)\
@@ -821,7 +863,6 @@ EPSG <- 4326
 z <- 11
 ```
 
-
 ```{r srtm, message = FALSE, results='hide'}
 dem <- digeoqR::prepara_dem(dir_in,
                             limite_srtm,
@@ -832,8 +873,10 @@ dem <- digeoqR::prepara_dem(dir_in,
 
 ## 
 
+#### Raster com dados de elevação (em metros)
+
 ```{r, eval=TRUE, echo=FALSE}
-plot(dem, main = "SRTM", col=topo.colors(300))
+plot(dem, main = "", col=topo.colors(300))
 ```
 
 ## 
@@ -1366,6 +1409,7 @@ gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],
 #### QAQC das duplicatas de campo e replicatas de laborório {#qaqc-das-duplicatas-de-campo-e replicatas-de-laboratório}
 
 -   Campo\
+    \
 -   Laboratório
 
 ## 
@@ -1524,7 +1568,7 @@ rmarkdown::paged_table(stat_transposta_a_sc, options = list(rows.print = 9, cols
 
 -   Classificação de todas as amostras
 -   Classificação das amostras agrupadas por unidade geológica
--   Outras em desenvolvimento
+-   Outras análises em desenvolvimento
 
 ## 
 
@@ -1643,10 +1687,11 @@ rmarkdown::paged_table(head(cl_mtd_tif_un))
 
 #### Outras análises
 
--   Ainda faltam converte para o pacote digeoqR as funções para:
+Ainda faltam converter para o pacote digeoqR as funções de:
+
 -   Gráficos EDA
 -   Mapas
--   Outras análises exploratórias (PCA, FA, regressão, RF...)
+-   Outras análises exploratórias (Cluster, PCA, FA, regressão, RF...)
 
 ## 3. Fechamento
 
