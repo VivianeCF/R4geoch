@@ -333,14 +333,14 @@ Sys.info() ## Informação do sistema operacional
 
 #### Importância do uso de scripts ou códigos
 
-Um script é um arquivo de texto que contém um conjunto de comandos ou instruções. Esses comandos e instruções são executados sequencialmente no R. Ele permite o usuário:\
+Um script é um arquivo de texto que contém um conjunto de comandos ou instruções. Esses comandos e instruções são executados sequencialmente no R. O script permite automatizar as tarefas e registrar todo o método de processamento.
+\
 
+**Importante**:
 ::: incremental
--   **Processar**: O script permite automatizar as tarefas e registrar todo o método de processamento.
+-   O nome do arquivo de script deve ser suficientemente claro para refletir o conteúdo e encontrá-lo facilmente. Se possível deve ser curto e evitar o uso de `"."` .
 
--   **Salvar:** O nome do arquivo deve ser suficientemente claro para refletir o conteúdo e encontrá-lo facilmente. Se possível deve ser curto e evitar o uso de `"."` .
-
--   **Documentar**: É muito importante documentar as operações ou funções utilizadas para poder replicar com facilidade o trabalho. Os comentários devem começar com `"#"`.
+-   É muito importante documentar as operações ou funções utilizadas no script, para poder replicar com facilidade o trabalho. Os comentários devem começar com `"#"`.
 :::
 
 ## 
@@ -840,7 +840,9 @@ tipo_base <- 1
 base_campo <- "fcampo"
 dir_os <- "inputs/os/" 
 ```
-Descrição: Converte as bases de entrada em uma lista de dados para serem carregadas nas funções modela_bacias e gera estações.
+**Descrição**: Converte as bases de entrada em uma lista de dados para serem carregadas nas funções modela_bacias e gera estações.\
+\
+
 ```{r feicoes_model, results='hide'}
 bases_model <-
   digeoqR::gera_bases_model(dir_in, 
@@ -862,7 +864,8 @@ dir_out <- "outputs/"
 EPSG <- 4326
 z <- 11
 ```
-**Descrição**: Recupera dados de elevação do terreno da [Amazon Web Services Terrain Tile](https://registry.opendata.aws/terrain-tiles). Para mais detalhes visite o [repositório](https://github.com/jhollist/elevatr)
+**Descrição**: Recupera dados de elevação do terreno da [Amazon Web Services Terrain Tile](https://registry.opendata.aws/terrain-tiles). Para mais detalhes visite o [repositório](https://github.com/jhollist/elevatr)\
+\
 ```{r srtm, message = FALSE, results='hide'}
 dem <- digeoqR::prepara_dem(dir_in,
                             limite_srtm,
@@ -882,7 +885,9 @@ plot(dem, main = "", col=topo.colors(300))
 ## 
 
 #### Planejando as estações de coleta {#planejando-as-estações-de-coleta}
-**Descrição**: Desenvolvido para automatizar o processo de escolha do locais de amostragem que devem ser a 100 m acima dos pontos de confluência dos rios. Também são excluídos locais nas áreas urbanas e de massa d'água. Todos os arquivos devem ser no formato shapefile.
+**Descrição**: Desenvolvido para automatizar o processo de escolha do locais de amostragem que devem ser a 100 m acima dos pontos de confluência dos rios. Também são excluídas estações em áreas urbanas e em massa d'água. Todos os arquivos devem ser no formato shapefile.\
+\
+
 ```{r plan, results='hide'}
  gera_est <- 
   digeoqR::gera_estacoes(dem, 
@@ -911,7 +916,9 @@ plot(gera_est$mapa)
 fase <- 1
 classe_am <- 2
 ```
-**Descrição**: A partir da imagem SRTM, rios, massa d'água é gerado um modelo de drenagem. A densidade de drenagem é dada pelo valor de threshold, quanto maior este valor, menor a densidade dos cursos dos rios. Após isto são geradas as bacias de cada estação de coleta planejada.
+**Descrição**: A partir da imagem SRTM, rios, massa d'água é gerado um modelo de drenagem. A densidade de drenagem é dada pelo valor de threshold, quanto maior este valor, menor a densidade dos cursos dos rios. Após isto são geradas as bacias de cada estação de coleta planejada.\
+\
+
 ```{r model_bacias_plan, results='hide'}
 modela_bacias_plan <-
   digeoqR::modela_bacias(fase, 
@@ -965,7 +972,9 @@ plot(modela_bacias_plan$`mapa plan`)
 ## 
 
 #### Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD) {#importação-dos-dados-de-campo-fcampo-suvey123-qfield}
-**Descrição**: Uma base de dados é preparada com as informações da localização das amostras e os nomes de campo e laboratório. Esta função está implementada para diferentes bases de dados: FCAMPO, SURVEY123 e QFIELD. Usa as planilhas de OS (Ordem de Serviço) para recuperar a relação número de campo e número de laboratório.
+**Descrição**: Uma base de dados é preparada com as informações da localização das amostras e os nomes de campo e laboratório. Esta função está implementada para diferentes bases de dados: FCAMPO, SURVEY123 e QFIELD. Usa as planilhas de OS (Ordem de Serviço) para recuperar a relação número de campo e número de laboratório.\
+\
+
 ```{r dados_campo, results='hide'}
 ex_campo <- 
   digeoqR::extrai_dados_campo(tipo_base, 
@@ -1075,6 +1084,8 @@ Nessa rotina os dados dos boletins são lidos e arrumados em dois formatos:\
 ## 
 
 ##### Sedimento de corrente
+**Descrição** Esta função lê os boletins csv e extrai as informações na forma de tabelas que são gravadas no diretório de saída .Retorna uma lista com todos os dados do boletim: resultados analíticos, condições analíticas, QA/QC, requisição das análises e preparação das amostras. \
+\
 
 ```{r, echo=FALSE, eval=TRUE}
 dir_bol <- "inputs/quimica/S/"; analise <- 2; 
@@ -1101,6 +1112,7 @@ quimica <-
 dir_bol <- "inputs/mineral/B/"
 
 ```
+**Descrição**: Lê boletins de análises mineralométricas. Retorna uma lista com todos os dados do boletim: resultados analíticos, condições analíticas, requisição das análises, preparação das amostras, separação gravi-magnética.
 
 ```{r analises_cb, results='hide'}
 mineral <- 
@@ -1119,6 +1131,8 @@ analise <- 2
 classe_am <- 2
 
 ```
+**Descrição**: Recupera e une os dados dos boletins analíticos e os dados de campo da base de dados fcampo. Os boletins analíticos devem estar no formato .csv e com layout modelo da GEOSOL do ano 2022 ou posterior.\
+\
 
 ```{r base_sc, results='hide', message=FALSE}
 base_sc <- 
@@ -1148,7 +1162,8 @@ dir_bol <- "inputs/mineral/B/"
 analise <- 1
 classe_am <- 1
 ```
-
+**Descrição**: Recupera e une os dados dos boletins analíticos e os dados de campo da base de dados fcampo. Os boletins analíticos devem estar no formato .csv e com layout modelo da GEOSOL do ano 2022 ou posterior.\
+\
 ```{r base_cb, results='hide', message=FALSE}
 base_cb <- 
   digeoqR::prepara_bases(dir_bol, 
@@ -1207,6 +1222,8 @@ feicao_in <- "geologia_br"; feicao_out <- "geologia_area";
 dir_in <- "inputs/campo/"; area <- "area_srtm"
 chave <- "RANGE"
 ```
+**Descrição**: Ferramenta que extrai a shape da feição (geologia, solo...) a partir de uma feição de escala menor. Usei o mapa geológico do Brasil ao milhonésimo do SGB.\
+\
 
 ```{r recorte_geol, results='hide'}
 geologia <- 
@@ -1221,6 +1238,8 @@ geologia <-
 ## 
 
 ##### Prepara a legenda da geologia
+**Descrição**: Este processamento usa a shape e xml do mapa das unidades litoestratigráficas do Brasil (2014) obtidos do GEOSGB (SGB-CPRM).\
+\
 
 ```{r leg_geo, results='hide'}
 lista_legenda <- 
@@ -1261,6 +1280,8 @@ nome_xml <- "geologia"
 classe_am <- 2
 tipo_leg <- 2
 ```
+**Decrição**: Cada bacia é recortada pelos polígonos da geologia. Esta função está configurada para a shape do mapa geológico ao milhonésimo 2014 do SGB-CPRM.\
+\
 
 ```{r inters_bacias, results='hide'}
 lito_bacia_sc <-
@@ -1304,6 +1325,9 @@ lito_bacia_sc <-
 corte_val = 70
 base <- base_sc
 ```
+
+**Descrição**: Filtra os elementos pelo grau de detecção.\
+\
 
 ```{r analise_elem,  results='hide'}
 res_val <- 
@@ -1353,6 +1377,8 @@ lito_bacia <- lito_bacia_sc
 leg <- leg2
 base <- base_sc
 ```
+**Descrição**: Testes de normalidade e de comparação das amostras\
+\
 
 ```{r test_brutos, echo=FALSE, results='hide'}
 teste_mtd_transf1 <-
@@ -1422,6 +1448,9 @@ gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],
 base <- base_sc
 tipo_am = 1
 ```
+**Descrição**: Controle de qualidade analítico e amostral. Tipos de amostragem: 1 = duplicata de campo 2 = replicata de laboratório.\
+
+\
 
 ```{r qaqc_campo, results='hide'}
 qaqc <- digeoqR::qaqc_gq(dir_out, 
@@ -1489,6 +1518,8 @@ rotulo_lito <- lito_bacia_sc[[2]]
 base <- base_sc
 tipo_proc <- 1
 ```
+**Descrição**: Gera planilhas com os principais parâmetros estatísticos em dois modos de processamento: 1 = Todas amostras e 2 = Agrupadas por unidades.\
+\
 
 ```{r stat_geral, results='hide'}
 tabela_estat_g_sc <- 
