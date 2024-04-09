@@ -982,7 +982,7 @@ plot(modela_bacias_plan$`mapa plan`)
 
 #### Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD) {#importação-dos-dados-de-campo-fcampo-suvey123-qfield}
 
-**Descrição**: Uma base de dados é preparada com as informações da localização das amostras e os nomes de campo e laboratório. Esta função está implementada para diferentes bases de dados. Usa as planilhas de OS (Ordem de Serviço) para recuperar a relação número de campo e número de laboratório.\
+**Descrição**: Uma base de dados é preparada com as informações da localização das amostras e os nomes de campo e laboratório. Usa as planilhas de OS (Ordem de Serviço) para recuperar a relação número de campo e número de laboratório.\
 \
 
 ```{r dados_campo, results='hide'}
