@@ -26,24 +26,22 @@ require(magrittr)
 ```
 
 ## Introdução
-
+\
+\
 Sejam bem vindos, estou muito contente pelo interesse de vocês. 😍\
-
-O fluxo de trabalho apresentado aqui abrange as tarefas iniciais de um projeto de levantamento geoquímico desenvolvido no SGB.\
-
+\
+A apresentação de hoje aborda uma introdução à linguagem R e sua aplicação na área da geoquímica. O fluxo de trabalho escolhido abrange as tarefas iniciais de um projeto de levantamento geoquímico desenvolvido no SGB.\
+\
 Utilizo como exemplo os dados do levantamento da folha Eldorado Paulista levantada em 2008.
 
 ## Objetivos
 
-A proposta aqui é mostrar um caminho mais fácil de usar as ferramentas do R, disponibilizadas na forma de um pacote do R desenvolvido para geoquímicos.
-
-Hoje o pacote [`digeoqR`](https://github.com/VivianeCF/digeoqR.git) já reune algumas funcionalidades muito interessantes.\
-
-No futuro pretendo reunir mais funções.\
-
-Aqui tento lançar uma semente para os futuros colaboradores deste ou de outros pacotes.\
-
-Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-CPRM.\
+A proposta aqui é mostrar um caminho mais fácil de usar as ferramentas do R, disponibilizadas na forma de um pacote do R voltado para a comunidade de geoquímicos.\
+\
+Para testar esta forma de uso do R criei o pacote [`digeoqR`](https://github.com/VivianeCF/digeoqR.git), ele já reune algumas funcionalidades muito interessantes. 
+No futuro pretendo adicionar mais funções voltadas ao tratamento dos dados.\
+\
+Aqui tento lançar uma semente para os futuros colaboradores deste ou de outros pacotes. Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-CPRM. \
 
 ## Conteúdo
 
@@ -56,12 +54,13 @@ Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-
 ## 1. Introdução a linguagem R
 
 ::: columns
-::: {.column width="50%" style="font-size: 30px"}
+::: {.column width="50%" style="font-size: 40px"}
 1.  [O que é R?](#r)
 
     -   História do R
+    
     -   Por que usar R?
-    -   É útil programar?
+    
     -   CRAN
 
 2.  [Instalação e estrutura](#instalacao-e-estrutura)
@@ -79,12 +78,12 @@ Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-
     -   Regras
 :::
 
-::: {.column width="50%" style="font-size: 30px"}
+::: {.column width="50%" style="font-size: 40px"}
 4.  [Pacotes](#pacotes)
 
     -   Instalação
 
-    -   Pacotes pré-instalados e rota de busca
+
 
     -   Funções
 
@@ -96,13 +95,10 @@ Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-
 
 6.  [Iniciar sessão no R](#iniciar-sessao-no-r)
 
-    -   Alguns comandos básicos
-
-    -   options()
-
+    -   Comandos básicos
+    
     -   Erros e advertências
 
-    -   Uso de funções
 :::
 :::
 
@@ -110,7 +106,7 @@ Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-
 
 ### O que é R? {#r}
 
-::: incremental
+::: {.incremental}
 -   R é uma linguagem de programação interpretada de código aberto. Não é compilada e é executada passo a passo por um programa que interpreta os resultados.
 
 -   R é uma linguagem de progamação orientada a manipulação de dados, análise estatística e visualização gráfica dos dados.
@@ -120,11 +116,13 @@ Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-
 
 #### História do R
 
+::: {.incremental}
 -   Em 1993 o R foi criado como um dialeto da linguagem S desenvolvida por [John Chambers](https://www.r-bloggers.com/2014/01/john-chambers-recounts-the-history-of-s-and-r/) e colaboradores.
 
--   Os nomes importantes nesta história são muitos, mas os principais são: [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman/statistician) e [Ross Ihaka](https://www.stat.auckland.ac.nz/~ihaka/). A hitória do R pode ser vista [aqui](https://cran.r-project.org/doc/html/interface98-paper/paper_2.html).
+-   Os nomes importantes nesta história são muitos, mas os principais são: [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman/statistician) e [Ross Ihaka](https://www.stat.auckland.ac.nz/~ihaka/). A história do R pode ser vista [aqui](https://cran.r-project.org/doc/html/interface98-paper/paper_2.html).
 
 -   Em 1995, [Martin Mächler](https://people.math.ethz.ch/~maechler/) deu uma contribuição importante ao convencer Ross e Robert a usar a Licença Pública Geral [GNU](https://gnu.org/licenses/gpl-3.0.html) (General Public Licenses) para tornar o R um software livre. A versão 1.0.0 do R só foi lançada em fevereiro de 2000.\
+:::
 
 ## 
 
@@ -137,15 +135,15 @@ Algumas das muitas razões:
 
 2.  Funciona em múltiplas plataformas (Windows, MAC, Linux)
 
-3.  Replicabilidade dos procedimentos
+3.  Permite a replicabilidade dos procedimentos
 
 4.  Dispõe de modernas técnicas estatísticas
 
 5.  Está em constante desenvolvimento
 
-6.  Ferramenta poderosa para criação de gráficos
+6.  É uma ferramenta poderosa para criação de gráficos
 
-7.  Integração com outras linguagens: LATEX, C++, Python, Julia, Stan...
+7.  Tem integração com outras linguagens: LATEX, C++, Python, Julia, Stan...
 :::
 
 ## 
@@ -238,6 +236,23 @@ installr::updateR()
 -   O [RStudio Cloud](https://posit.cloud/plans/free) é um serviço gratuito oferecido pelo RStudio que permite aos usuários usar o R o RStudio on-line e colaborar em projetos com outros usuários através do site do RStudio Cloud. O limitante é que se for usar mais de 24h por mês passa a ser pago.
 
 ## 
+#### Sessões do R
+
++--------------------------------------------------------------------------------------------+
+| ### ![](images/iconR.jpg){fig-align="left" width="100"} Sessão do RGui {style="fig-align"} |
++--------------------------------------------------------------------------------------------+
+
+![](images/Rgui.PNG){fig-align="center"}
+
+## 
+
++-----------------------------------------------------------------------------------------------------+
+| ### ![](images/iconRStudio.jpg){fig-align="left" width="100"} Sessão do RStudio {style="fig-align"} |
++-----------------------------------------------------------------------------------------------------+
+
+![](images/rstudio.PNG){fig-align="center" width="1200"}
+
+## 
 
 #### Mensagem inicial da sessão do R {style="font-size: 50px;"}
 
@@ -261,21 +276,6 @@ Digite 'q()' para sair do R.
 
 ```
 
-## 
-
-+--------------------------------------------------------------------------------------------+
-| ### ![](images/iconR.jpg){fig-align="left" width="100"} Sessão do RGui {style="fig-align"} |
-+--------------------------------------------------------------------------------------------+
-
-![](images/Rgui.PNG){fig-align="center"}
-
-## 
-
-+-----------------------------------------------------------------------------------------------------+
-| ### ![](images/iconRStudio.jpg){fig-align="left" width="100"} Sessão do RStudio {style="fig-align"} |
-+-----------------------------------------------------------------------------------------------------+
-
-![](images/rstudio.PNG){fig-align="center" width="1200"}
 
 ## 
 
@@ -406,7 +406,7 @@ devtools::install_github("VivianeCFerrari/digeoqR")
 
 #### Carregar
 
-```{r, echo = TRUE, eval=FALSE, `code-line-numbers`="4|7"}
+```{r, echo = TRUE, eval=FALSE, `code-line-numbers`="1-2|4-5|7-8"}
 ## Para usar as funções de um pacote já instalado usar a função:
 ## library(...)
 
@@ -414,6 +414,7 @@ library("digeoqR")
 # Você pode dispensar o uso de aspas
 
 library(digeoqR)
+# Sem aspas
 ```
 
 ## 
@@ -431,7 +432,7 @@ Quase todas as funções do R seguem uma mesma estrutura. Este exemplo mostra um
 
 #### Executando funções no R
 
-```{r, echo = TRUE, eval = FALSE, `code-line-numbers`="1|4-5|8|11|14"}
+```{r, echo = TRUE, eval = FALSE, `code-line-numbers`="1-2|4-6|8-9|11-12|14-15"}
 mean(variable.1)
 ## Error in mean(variable.1): object 'variable.1' not found
 
@@ -478,7 +479,7 @@ mean(c(1:10, NA), 0, TRUE)
 
 #### Funções sobre os pacotes
 
-```{r, echo = TRUE, eval = FALSE, `code-line-numbers`="1|3|5|8|10|12|14"}
+```{r, echo = TRUE, eval = FALSE, `code-line-numbers`="1|3|5-6|8|10|12|14-15"}
 installed.packages() # lista pacotes instalados
 
 packageStatus() # informa quantos pacotes não estão atualizados
@@ -493,6 +494,7 @@ update.packages() # atualiza pacotes
 library(help="MASS") # Informação sobre um pacote específico
 
 demo("graphics") # Demonstração de um pacote
+#
 ```
 
 ## 
@@ -530,7 +532,7 @@ search()
 
 #### Conseguindo ajuda por si só
 
-```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1|3|5|7-8|10|12|14-15|17-18|20-21|23|25-26|28"}
+```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1|3|5|7-8|10|12|14-15|17-18|20-21|23|25-26|28-29"}
 help(lm) # Comando básico de busca
 
 ?lm # idem do anterior
@@ -559,7 +561,7 @@ browseVignettes() # Mostra na web as vinhetas disponíveis e o acesso
 # a elas. De um pacote: (package="package-name")
 
 vignette(all=TRUE) # Mostra todas as vinhetas disponíveis na tela
-
+#
 ```
 
 ## 
@@ -746,7 +748,7 @@ rnorm(8)
 
 ## 
 
-### Código incompleto
+#### Código incompleto
 
 ```{r, echo=TRUE, eval=FALSE}
 > objeto.1 <- seq(1, 30, 0.5)
@@ -759,13 +761,13 @@ rnorm(8)
 ::: {.incremental style="border:2px solid red;"}
 -   Em R o sinal "\>" no painel de console significa que o intérprete está pronto para receber ordens.
 
--   Se após dar uma ordem aparecer o sinal "+", isso indica que é uma ordem incompleta. No exemplo acima falta fechar o parênteses da funão plot().
+-   Se após dar uma ordem aparecer o sinal "+", isso indica que é uma ordem incompleta. No exemplo acima falta fechar o parêntese da função `plot()`.
 
--   Se teclar enter com uma função incompleta vai aparecer novamente o sinal "+", para sair tecle esc
+-   Se teclar enter com uma função incompleta vai aparecer novamente o sinal "+", para sair tecle `esc`
 :::
 
 ##
-### Dicas para o aprendizado do R
+#### Dicas para o aprendizado do R
 \
 Dois conselhos do [Hadley Wickham](http://adv-r.had.co.nz/Introduction.html) para aprender e melhorar a programação em R:\
 \
@@ -1070,7 +1072,7 @@ plot(modela_bacias_sc$`mapa amostragem`)
 
 ## 
 
-##### Concentrado de Bateia
+##### Concentrado de bateia
 
 ```{r mapa_am_cb, echo=FALSE}
 plot(modela_bacias_cb$`mapa amostragem`)
@@ -1108,8 +1110,6 @@ quimica <-
 ## 
 
 ##### Concentrado de bateia
-
-##### Sedimento de corrente
 
 ```{r, echo=FALSE, eval=TRUE}
 dir_bol <- "inputs/mineral/B/"
@@ -1190,16 +1190,22 @@ rmarkdown::paged_table(dados_cb, options = list(rows.print = 9, cols.print = 5))
 
 #### Enriquecimento das bases com feições espaciais (geologia) {#enriquecimento-das-bases-com-feições-espaciais-geologia}
 
+::: {.incremental}
+
+\
+
 -   Extrai dados xml cores da layer (QGIS)\
 -   Visualiza cores das unidades geradas\
 -   Prepara recorte da geologia e estilo de cores\
 -   Prepara legenda da geologia\
 -   Mapa geológico simplificado\
 -   Faz a intersecção entre bacias e geologia
-
+:::
 ## 
 
 ##### Extrai dados xml cores da layer (QGIS)
+**Descrição**: Extrai dados da legenda de um arquivo de estilo xml. No QGIS use a ferramenta Create style database from project para gerar o XML, da feição pretendida, aqui usei usei o do mapa geológico do Brasil ao milhonésimo de 2014 do SGB-CPRM.\
+\
 
 ```{r mapas_base}
 
@@ -1225,7 +1231,7 @@ feicao_in <- "geologia_br"; feicao_out <- "geologia_area";
 dir_in <- "inputs/campo/"; area <- "area_srtm"
 chave <- "RANGE"
 ```
-**Descrição**: Ferramenta que extrai a shape da feição (geologia, solo...) a partir de uma feição de escala menor. Usei o mapa geológico do Brasil ao milhonésimo do SGB.\
+**Descrição**: Ferramenta que recorta a shape de uma feição (geologia, solo...) pelo limite da área. Usei o mapa geológico do Brasil ao milhonésimo do SGB.\
 \
 
 ```{r recorte_geol, results='hide'}
@@ -1417,6 +1423,7 @@ rmarkdown::paged_table(teste_lf,
 ## 
 
 ##### Teste Wilcoxon
+**Descrição**: Visual do Teste Wilcoxon compara as análises de cada elemento agrupados por unidades litológicas. Apresenta um gráfico onde a cor vermelha indica p-value <0,05.
 
 ```{r prep_vis_wilcoxon, results='hide'}
 vis_wilcolxon <- 
@@ -1437,15 +1444,9 @@ gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],
 
 ## 
 
-#### QAQC das duplicatas de campo e replicatas de laborório {#qaqc-das-duplicatas-de-campo-e replicatas-de-laboratório}
+##### QAQC das duplicatas de campo
+{#qaqc-das-duplicatas-de-campo-e%20replicatas-de-laboratório}
 
--   Campo\
-    \
--   Laboratório
-
-## 
-
-##### Duplicatas de campo
 
 ```{r, echo=FALSE, eval=TRUE}
 base <- base_sc
@@ -1480,7 +1481,7 @@ gridExtra::grid.arrange(table_grid)
 
 ## 
 
-##### Replicatas de laboratório
+##### QAQC das replicatas de laboratório
 
 ```{r, echo=FALSE, eval=TRUE}
 base <- base_sc
