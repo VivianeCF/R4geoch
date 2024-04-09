@@ -3,7 +3,7 @@ title: "Uso do R nos Levantamentos Geoquímicos"
 author: "Viviane Carillo Ferrari"
 subtitle: "DIGEOQ"
 title-slide-attributes:
-  data-background-image: "/images/fundo_azul.png"
+  data-background-image: "images/fundo_azul.png"
   data-background-opacity: "0.5"
 format: 
   revealjs:
