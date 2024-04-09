@@ -337,10 +337,13 @@ Um script é um arquivo de texto que contém um conjunto de comandos ou instruç
 \
 
 **Importante**:
-::: incremental
+
+::: {.incremental}
+
 -   O nome do arquivo de script deve ser suficientemente claro para refletir o conteúdo e encontrá-lo facilmente. Se possível deve ser curto e evitar o uso de `"."` .
 
 -   É muito importante documentar as operações ou funções utilizadas no script, para poder replicar com facilidade o trabalho. Os comentários devem começar com `"#"`.
+
 :::
 
 ## 
