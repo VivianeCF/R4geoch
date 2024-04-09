@@ -3,10 +3,8 @@ title: "Uso do R nos Levantamentos Geoquímicos"
 author: "Viviane Carillo Ferrari"
 subtitle: "DIGEOQ"
 title-slide-attributes:
-  data-background-image: /images/fundo_azul.png
-  data-background-size: contain
+  data-background-image: "/images/fundo_azul.png"
   data-background-opacity: "0.5"
-
 format: 
   revealjs:
     logo: "images/logo.png"
@@ -21,18 +19,6 @@ format:
     hash-type: number
     preview-links: false
     code-line-numbers: false
-    include-in-header: 
-      text: |
-        <style>
-        .center-xy {
-          margin: 0;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          -ms-transform: translateY(-50%), translateX(-50%);
-          transform: translateY(-50%), translateX(-50%);
-        }
-        </style>    
 ---
 
 ```{r setup, include=FALSE}
@@ -1347,7 +1333,7 @@ lito_bacia_sc <-
     -   Normalidade (Shapiro-Wilker e Lillie-Fors\
     -   Comparativo (Wilcolxon não pareado)\
 
--   [QAQC das duplicatas de campo e replicatas de laboratório](#qaqc-das-duplicatas-de-campo-e%20replicatas-de-laboratório)
+-   [QAQC das duplicatas de campo e replicatas de laboratório](#qaqc-das-duplicatas-de-campo-e-replicatas-de-laboratório)
 
     -   Duplicatas de campo\
     -   Replicatas de laboratório
@@ -1474,23 +1460,23 @@ gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],
 
 ## 
 
-##### QAQC das duplicatas de campo
+##### QAQC das duplicatas de campo {#qaqc-das-duplicatas-de-campo-e-replicatas-de-laboratório}
 
-{#qaqc-das-duplicatas-de-campo-e%20replicatas-de-laboratório}
-
+**Descrição**: Controle de qualidade analítico e amostral. Tipos de amostragem: 1 = duplicata de campo 2 = replicata de laboratório.\
+\
 ```{r, echo=FALSE, eval=TRUE}
 base <- base_sc
 tipo_am = 1
 ```
 
-**Descrição**: Controle de qualidade analítico e amostral. Tipos de amostragem: 1 = duplicata de campo 2 = replicata de laboratório.\
+
 
 \
 
 ```{r qaqc_campo, results='hide'}
 qaqc <- digeoqR::qaqc_gq(dir_out, 
                          base, 
-                         tipo_am)
+                         tipo_am = 1)
 ```
 
 ## 
@@ -1514,6 +1500,8 @@ gridExtra::grid.arrange(table_grid)
 
 ##### QAQC das replicatas de laboratório
 
+**Descrição**: Controle de qualidade analítico e amostral. Tipos de amostragem: 1 = duplicata de campo 2 = replicata de laboratório.\
+\
 ```{r, echo=FALSE, eval=TRUE}
 base <- base_sc
 tipo_am = 2
@@ -1522,7 +1510,7 @@ tipo_am = 2
 ```{r qaqc_lab, results='hide'}
 qaqc <- digeoqR::qaqc_gq(dir_out, 
                          base, 
-                         tipo_am)
+                         tipo_am = 2)
 ```
 
 ## 
@@ -1559,7 +1547,7 @@ tipo_proc <- 1
 
 ```{r stat_geral, results='hide'}
 tabela_estat_g_sc <- 
-  digeoqR::tabela_estatistica(tipo_proc,
+  digeoqR::tabela_estatistica(tipo_proc = 1,
                               rotulo_lito, 
                               base,
                               lista_legenda, 
@@ -1594,10 +1582,12 @@ rmarkdown::paged_table(stat_normal_g_sc, options = list(rows.print = 9, cols.pri
 ```{r, echo=FALSE, eval=TRUE}
 tipo_proc = 2
 ```
+**Descrição**: Gera planilhas com os principais parâmetros estatísticos em dois modos de processamento: 1 = Todas amostras e 2 = Agrupadas por unidades.\
+\
 
 ```{r stat_unid, results='hide'}
 tabela_estat_a_sc <-
-  digeoqR::tabela_estatistica(tipo_proc,
+  digeoqR::tabela_estatistica(tipo_proc = 2,
                               rotulo_lito,
                               base, 
                               lista_legenda, 
@@ -1636,29 +1626,32 @@ rmarkdown::paged_table(stat_transposta_a_sc, options = list(rows.print = 9, cols
 ### Etapa IV Análise Exploratória dos dados
 
 -   Classificação de todas as amostras
+
 -   Classificação das amostras agrupadas por unidade geológica
--   Outras análises em desenvolvimento
 
-## 
+-   Outras análises em desenvolvimento. 
 
+## {visibility="hidden"} 
 #### Classificação de todas as amostras
-
 Método de classificação: MAD
 
-```{r mad_tudo, eval = TRUE, echo=TRUE}
-cl_mtd_mad <- digeoqR::classifica_metodos(tipo_proc = 1, 
-                                          mtd_class = 1,
-                                          lito_bacia, 
-                                          elem_val, 
-                                          base, 
-                                          nbc = 10)
+```{r mad_tudo, eval = FALSE, echo=TRUE}
+cl_mtd_mad <- 
+  digeoqR::classifica_metodos(tipo_proc = 1,
+                              mtd_class = 1,
+                              lito_bacia,
+                              elem_val,
+                              base,
+                              nbc = 10)
 ```
 
 ## 
 
 #### Classificação de todas as amostras
 
-Método de classificação: TIF
+**Descrição**: Métodos de classificação de dados geoquímicos. Tipos de processamento: 1 = geral 2 = por unidades. Métodos de classificação 1 = MAD, 2 = TIF, 3 = C-A.\
+\
+Método de classificação: TIF\
 
 ```{r tif_tudo, eval = TRUE, echo=TRUE}
 cl_mtd_tif <- 
@@ -1670,13 +1663,13 @@ cl_mtd_tif <-
                               nbc = 10)
 ```
 
-## 
+## {visibility="hidden"}
 
 #### Classificação de todas as amostras
 
 Método de classificação: C-A
 
-```{r , eval = TRUE, echo=TRUE}
+```{r , eval = FALSE, echo=TRUE}
 cl_mtd_ca <- 
   digeoqR::classifica_metodos(tipo_proc = 1, 
                               mtd_class = 3,
@@ -1686,13 +1679,13 @@ cl_mtd_ca <-
                               nbc = 10)
 ```
 
-## 
+## {visibility="hidden"}
 
 #### Classificação das amostras agrupadas por unidade geológica
 
 Método de classificação: MAD
 
-```{r, eval = TRUE, echo=TRUE}
+```{r, eval = FALSE, echo=TRUE}
 cl_mtd_mad_un <- 
   digeoqR::classifica_metodos(tipo_proc = 2, 
                               mtd_class = 1,
@@ -1702,10 +1695,11 @@ cl_mtd_mad_un <-
                               nbc = 10)
 ```
 
-## 
+##
 
 #### Classificação das amostras agrupadas por unidade geológica
-
+**Descrição**: Métodos de classificação de dados geoquímicos. Tipos de processamento: 1 = geral 2 = por unidades. Métodos de classificação 1 = MAD, 2 = TIF, 3 = C-A.\
+\
 Método de classificação: TIF
 
 ```{r, eval = TRUE, echo=TRUE}
@@ -1718,13 +1712,13 @@ cl_mtd_tif_un <-
                               nbc = 10)
 ```
 
-## 
+## {visibility="hidden"}
 
 #### Classificação das amostras agrupadas por unidade geológica
 
 Método de classificação: C-A
 
-```{r, eval = TRUE, echo=TRUE}
+```{r, eval = FALSE, echo=TRUE}
 cl_mtd_ca_un <- 
   digeoqR::classifica_metodos(tipo_proc = 2, 
                               mtd_class = 3,
@@ -1736,7 +1730,7 @@ cl_mtd_ca_un <-
 
 ## 
 
-##### Tabela de dados classificados ex: TIF - todas as amostras
+##### Tabela de dados classificados - TIF - todas as amostras
 
 ```{r, eval=TRUE, echo=FALSE}
 rmarkdown::paged_table(head(cl_mtd_tif) )
@@ -1745,7 +1739,7 @@ rmarkdown::paged_table(head(cl_mtd_tif) )
 
 ## 
 
-##### Tabela de dados classificados ex: TIF - por unidades
+##### Tabela de dados classificados - TIF - por unidades
 
 ```{r, eval=TRUE, echo=FALSE}
 rmarkdown::paged_table(head(cl_mtd_tif_un))
