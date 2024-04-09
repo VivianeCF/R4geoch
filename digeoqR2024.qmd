@@ -1283,7 +1283,7 @@ lito_bacia_sc <-
 
 ### Etapa III Avaliação dos dados analíticos
 
--   [Análise dos dados censurados à esquerda](#dados-censurados-à-esquerda)
+-   [Análise dos dados censurados à esquerda](#dados-censurados-a-esquerda)
 
 -   [Análise dos valores ausentes](#análise-dos-valores-ausentes)
 
@@ -1301,7 +1301,7 @@ lito_bacia_sc <-
 
 ## 
 
-#### Análise dos dados censurados à esquerda {#análise-dos-dados-censurados-à-esquerda}
+#### Análise dos dados censurados à esquerda {#dados-censurados-a-esquerda}
 
 ```{r, echo=FALSE, eval=TRUE}
 corte_val = 70
@@ -1346,7 +1346,7 @@ rmarkdown::paged_table(nmld,
 ```{r ausentes, echo = FALSE}
 nmna <- res_val[[1]][, c("elementos", "nna")]
 colnames(nmna) <- c("Analito", "N. Ausentes")
-rmarkdown::paged_table(nmna, 
+rmarkdown::paged_table(nmna,
                        options = list(rows.print = 9))
 ```
 
@@ -1360,10 +1360,10 @@ leg <- leg2
 base <- base_sc
 ```
 
-**Descrição**: Testes de normalidade e de comparação das amostras\
+**Descrição**: Testes de normalidade e de comparação das amostras. Método de transformação dos dados: 1 = sem transformação e 2 = logtransformados\
 \
 
-```{r test_brutos, echo=FALSE, results='hide'}
+```{r test_brutos, echo=TRUE, results='hide'}
 teste_mtd_transf1 <-
   digeoqR::testes_estatisticos(dir_out, 
                                base, 
@@ -1373,6 +1373,7 @@ teste_mtd_transf1 <-
                                leg, 
                                elem_val )
 ```
+##
 
 ##### Teste Shapiro-Wilker
 
@@ -1400,10 +1401,12 @@ rmarkdown::paged_table(teste_lf,
 
 **Descrição**: Visual do Teste Wilcoxon compara as análises de cada elemento agrupados por unidades litológicas. Apresenta um gráfico onde a cor vermelha indica p-value \<0,05.
 
-```{r prep_vis_wilcoxon, results='hide'}
+```{r prep_vis_wilcoxon, echo=TRUE, eval=TRUE, results='hide'}
 vis_wilcolxon <- 
-  digeoqR::vis_teste_wilcox(dir_out, elem_val,base, 
-                            lito_bacia, nbc = 10)
+  digeoqR::vis_teste_wilcox(dir_out,
+                            elem_val,base,
+                            lito_bacia, 
+                            nbc = 10)
 ```
 
 ## 
@@ -1414,7 +1417,9 @@ vis_wilcolxon <-
 gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],  
                          ncol = 2,
                          top = grid::textGrob(""),
-                         gp=gpar(fontsize=12,font=3))
+                        gp=gpar(fontsize=12,font=3))
+                        
+                        
 ```
 
 ## 
