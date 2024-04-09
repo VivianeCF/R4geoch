@@ -1,6 +1,11 @@
 ---
 title: "Uso do R nos Levantamentos Geoquímicos"
 author: "Viviane Carillo Ferrari"
+subtitle: "DIGEOQ"
+title-slide-attributes:
+  data-background-image: /images/fundo_azul.png
+  data-background-size: contain
+  data-background-opacity: "0.5"
 
 format: 
   revealjs:
@@ -16,6 +21,18 @@ format:
     hash-type: number
     preview-links: false
     code-line-numbers: false
+    include-in-header: 
+      text: |
+        <style>
+        .center-xy {
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -ms-transform: translateY(-50%), translateX(-50%);
+          transform: translateY(-50%), translateX(-50%);
+        }
+        </style>    
 ---
 
 ```{r setup, include=FALSE}
@@ -26,6 +43,7 @@ require(magrittr)
 ```
 
 ## Introdução
+
 \
 \
 Sejam bem vindos, estou muito contente pelo interesse de vocês. 😍\
@@ -38,10 +56,9 @@ Utilizo como exemplo os dados do levantamento da folha Eldorado Paulista levanta
 
 A proposta aqui é mostrar um caminho mais fácil de usar as ferramentas do R, disponibilizadas na forma de um pacote do R voltado para a comunidade de geoquímicos.\
 \
-Para testar esta forma de uso do R criei o pacote [`digeoqR`](https://github.com/VivianeCF/digeoqR.git), ele já reune algumas funcionalidades muito interessantes. 
-No futuro pretendo adicionar mais funções voltadas ao tratamento dos dados.\
+Para testar esta forma de uso do R criei o pacote [`digeoqR`](https://github.com/VivianeCF/digeoqR.git), ele já reune algumas funcionalidades muito interessantes. No futuro pretendo adicionar mais funções voltadas ao tratamento dos dados.\
 \
-Aqui tento lançar uma semente para os futuros colaboradores deste ou de outros pacotes. Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-CPRM. \
+Aqui tento lançar uma semente para os futuros colaboradores deste ou de outros pacotes. Espero tornar o R uma ferramenta de apoio aos trabalhos dos geoquímicos do SGB-CPRM.\
 
 ## Conteúdo
 
@@ -58,9 +75,9 @@ Aqui tento lançar uma semente para os futuros colaboradores deste ou de outros 
 1.  [O que é R?](#r)
 
     -   História do R
-    
+
     -   Por que usar R?
-    
+
     -   CRAN
 
 2.  [Instalação e estrutura](#instalacao-e-estrutura)
@@ -83,8 +100,6 @@ Aqui tento lançar uma semente para os futuros colaboradores deste ou de outros 
 
     -   Instalação
 
-
-
     -   Funções
 
 5.  [Ajuda em R](#ajuda-em-r)
@@ -96,9 +111,8 @@ Aqui tento lançar uma semente para os futuros colaboradores deste ou de outros 
 6.  [Iniciar sessão no R](#iniciar-sessao-no-r)
 
     -   Comandos básicos
-    
-    -   Erros e advertências
 
+    -   Erros e advertências
 :::
 :::
 
@@ -106,7 +120,7 @@ Aqui tento lançar uma semente para os futuros colaboradores deste ou de outros 
 
 ### O que é R? {#r}
 
-::: {.incremental}
+::: incremental
 -   R é uma linguagem de programação interpretada de código aberto. Não é compilada e é executada passo a passo por um programa que interpreta os resultados.
 
 -   R é uma linguagem de progamação orientada a manipulação de dados, análise estatística e visualização gráfica dos dados.
@@ -116,7 +130,7 @@ Aqui tento lançar uma semente para os futuros colaboradores deste ou de outros 
 
 #### História do R
 
-::: {.incremental}
+::: incremental
 -   Em 1993 o R foi criado como um dialeto da linguagem S desenvolvida por [John Chambers](https://www.r-bloggers.com/2014/01/john-chambers-recounts-the-history-of-s-and-r/) e colaboradores.
 
 -   Os nomes importantes nesta história são muitos, mas os principais são: [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman/statistician) e [Ross Ihaka](https://www.stat.auckland.ac.nz/~ihaka/). A história do R pode ser vista [aqui](https://cran.r-project.org/doc/html/interface98-paper/paper_2.html).
@@ -236,6 +250,7 @@ installr::updateR()
 -   O [RStudio Cloud](https://posit.cloud/plans/free) é um serviço gratuito oferecido pelo RStudio que permite aos usuários usar o R o RStudio on-line e colaborar em projetos com outros usuários através do site do RStudio Cloud. O limitante é que se for usar mais de 24h por mês passa a ser pago.
 
 ## 
+
 #### Sessões do R
 
 +--------------------------------------------------------------------------------------------+
@@ -275,7 +290,6 @@ ou 'help.start()' para abrir o sistema de ajuda em HTML no seu navegador.
 Digite 'q()' para sair do R.
 
 ```
-
 
 ## 
 
@@ -333,17 +347,14 @@ Sys.info() ## Informação do sistema operacional
 
 #### Importância do uso de scripts ou códigos
 
-Um script é um arquivo de texto que contém um conjunto de comandos ou instruções. Esses comandos e instruções são executados sequencialmente no R. O script permite automatizar as tarefas e registrar todo o método de processamento.
-\
+Um script é um arquivo de texto que contém um conjunto de comandos ou instruções. Esses comandos e instruções são executados sequencialmente no R. O script permite automatizar as tarefas e registrar todo o método de processamento.\
 
 **Importante**:
 
-::: {.incremental}
-
+::: incremental
 -   O nome do arquivo de script deve ser suficientemente claro para refletir o conteúdo e encontrá-lo facilmente. Se possível deve ser curto e evitar o uso de `"."` .
 
 -   É muito importante documentar as operações ou funções utilizadas no script, para poder replicar com facilidade o trabalho. Os comentários devem começar com `"#"`.
-
 :::
 
 ## 
@@ -631,18 +642,22 @@ y
 
 ```{r, echo=TRUE, eval=FALSE}
 rm(y) # elimina (remove) o objeto 
+
 ```
 
 \
 
 ```{r, echo=TRUE, eval=TRUE}
 objects() # idem ls()
+
 ```
 
 \
 
 ```{r, echo=TRUE}
-rm(list=ls(all=TRUE)) # elimina todos os objetos da sessão de trabalho
+# elimina todos os objetos da sessão
+rm(list=ls(all=TRUE)) 
+
 ```
 
 ## 
@@ -665,7 +680,7 @@ dir.create() # cria um diretório
 
 ##### Exemplos
 
-```{r, eval=FALSE, echo=TRUE, `code-line-numbers`="2|5|7|9|11|13"}
+```{r, eval=FALSE, echo=TRUE, `code-line-numbers`="1-2|4-5|7|9|11|13-14"}
 # Opção 1
 setwd("C:/Users/usuario/Desktop/Curso_R")
 
@@ -700,7 +715,7 @@ argumento `digits`\
 
 Descrição: Número de digitos significativos a serem impressos\
 
-```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1|4-5"}
+```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1-2|4-5"}
 100/654
 ## [1] 0.1529052
 
@@ -716,7 +731,7 @@ options(digits = 4)
 Argumento: `width`\
 Descrição: Lagura do texto de saída\
 
-```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1-2|5-7"}
+```{r, echo=TRUE, eval=FALSE, `code-line-numbers`="1-3|5-9"}
 set.seed(1234)
 rnorm(8)
 ## [1] -1.2071  0.2774  1.0844 -2.3457  0.4291  0.5061 -0.5747 -0.5466
@@ -734,8 +749,7 @@ rnorm(8)
 
 **Importante:**
 
-::: {.incremental}
-
+::: incremental
 \
 
 -   Quando aparece uma mensagem de erro ou de alerta é preciso investigar!\
@@ -743,7 +757,6 @@ rnorm(8)
 \
 
 -   A principal diferença entre um erro e um aviso é que o erro não produz um nenhum resultado, enquanto um aviso o faz.\
-
 :::
 
 ## 
@@ -766,22 +779,22 @@ rnorm(8)
 -   Se teclar enter com uma função incompleta vai aparecer novamente o sinal "+", para sair tecle `esc`
 :::
 
-##
+## 
+
 #### Dicas para o aprendizado do R
+
 \
 Dois conselhos do [Hadley Wickham](http://adv-r.had.co.nz/Introduction.html) para aprender e melhorar a programação em R:\
 \
 
-
 ::: {.incremental style="padding:30px;border:2px solid red;"}
 1.  Leia código fonte. Busque os pacotes ou as funções que você usa com mais frequência e veja como estão escritas.\
-\
+    \
 2.  Adote uma mentalidade científica. Se não compreender como funciona algo, desenvolva uma hipótese, desenhe alguns experimentos, execute-os e registre seus resultados.\
-
 :::
 
+## 
 
-##
 ### Referências extras {#sec-referências}
 
 ::: incremental
@@ -845,6 +858,7 @@ tipo_base <- 1
 base_campo <- "fcampo"
 dir_os <- "inputs/os/" 
 ```
+
 **Descrição**: Converte as bases de entrada em uma lista de dados para serem carregadas nas funções modela_bacias e gera estações.\
 \
 
@@ -869,8 +883,10 @@ dir_out <- "outputs/"
 EPSG <- 4326
 z <- 11
 ```
+
 **Descrição**: Recupera dados de elevação do terreno da [Amazon Web Services Terrain Tile](https://registry.opendata.aws/terrain-tiles). Para mais detalhes visite o [repositório](https://github.com/jhollist/elevatr)\
 \
+
 ```{r srtm, message = FALSE, results='hide'}
 dem <- digeoqR::prepara_dem(dir_in,
                             limite_srtm,
@@ -890,6 +906,7 @@ plot(dem, main = "", col=topo.colors(300))
 ## 
 
 #### Planejando as estações de coleta {#planejando-as-estações-de-coleta}
+
 **Descrição**: Desenvolvido para automatizar o processo de escolha do locais de amostragem que devem ser a 100 m acima dos pontos de confluência dos rios. Também são excluídas estações em áreas urbanas e em massa d'água. Todos os arquivos devem ser no formato shapefile.\
 \
 
@@ -921,6 +938,7 @@ plot(gera_est$mapa)
 fase <- 1
 classe_am <- 2
 ```
+
 **Descrição**: A partir da imagem SRTM, rios, massa d'água é gerado um modelo de drenagem. A densidade de drenagem é dada pelo valor de threshold, quanto maior este valor, menor a densidade dos cursos dos rios. Após isto são geradas as bacias de cada estação de coleta planejada.\
 \
 
@@ -977,7 +995,8 @@ plot(modela_bacias_plan$`mapa plan`)
 ## 
 
 #### Importação dos dados de campo (FCAMPO, SUVEY123, QFIELD) {#importação-dos-dados-de-campo-fcampo-suvey123-qfield}
-**Descrição**: Uma base de dados é preparada com as informações da localização das amostras e os nomes de campo e laboratório. Esta função está implementada para diferentes bases de dados: FCAMPO, SURVEY123 e QFIELD. Usa as planilhas de OS (Ordem de Serviço) para recuperar a relação número de campo e número de laboratório.\
+
+**Descrição**: Uma base de dados é preparada com as informações da localização das amostras e os nomes de campo e laboratório. Esta função está implementada para diferentes bases de dados. Usa as planilhas de OS (Ordem de Serviço) para recuperar a relação número de campo e número de laboratório.\
 \
 
 ```{r dados_campo, results='hide'}
@@ -996,8 +1015,8 @@ ex_campo <-
 
 -   Sedimento de corrente\
 -   Concentrado de bateia\
-\
-**Descrição**: A partir da imagem SRTM, rios, massa d'água é gerado um modelo de drenagem. A densidade de drenagem é dada pelo valor de threshold, quanto maior este valor, menor a densidade dos cursos dos rios. Após isto são geradas as bacias de cada estação de coleta.
+    \
+    **Descrição**: A partir da imagem SRTM, rios, massa d'água é gerado um modelo de drenagem. A densidade de drenagem é dada pelo valor de threshold, quanto maior este valor, menor a densidade dos cursos dos rios. Após isto são geradas as bacias de cada estação de coleta.
 
 ## 
 
@@ -1089,7 +1108,8 @@ Nessa rotina os dados dos boletins são lidos e arrumados em dois formatos:\
 ## 
 
 ##### Sedimento de corrente
-**Descrição** Esta função lê os boletins csv e extrai as informações na forma de tabelas que são gravadas no diretório de saída .Retorna uma lista com todos os dados do boletim: resultados analíticos, condições analíticas, QA/QC, requisição das análises e preparação das amostras. \
+
+**Descrição** Esta função lê os boletins csv e extrai as informações na forma de tabelas que são gravadas no diretório de saída .Retorna uma lista com todos os dados do boletim: resultados analíticos, condições analíticas, QA/QC, requisição das análises e preparação das amostras.\
 \
 
 ```{r, echo=FALSE, eval=TRUE}
@@ -1115,6 +1135,7 @@ quimica <-
 dir_bol <- "inputs/mineral/B/"
 
 ```
+
 **Descrição**: Lê boletins de análises mineralométricas. Retorna uma lista com todos os dados do boletim: resultados analíticos, condições analíticas, requisição das análises, preparação das amostras, separação gravi-magnética.
 
 ```{r analises_cb, results='hide'}
@@ -1134,6 +1155,7 @@ analise <- 2
 classe_am <- 2
 
 ```
+
 **Descrição**: Recupera e une os dados dos boletins analíticos e os dados de campo da base de dados fcampo. Os boletins analíticos devem estar no formato .csv e com layout modelo da GEOSOL do ano 2022 ou posterior.\
 \
 
@@ -1165,8 +1187,10 @@ dir_bol <- "inputs/mineral/B/"
 analise <- 1
 classe_am <- 1
 ```
+
 **Descrição**: Recupera e une os dados dos boletins analíticos e os dados de campo da base de dados fcampo. Os boletins analíticos devem estar no formato .csv e com layout modelo da GEOSOL do ano 2022 ou posterior.\
 \
+
 ```{r base_cb, results='hide', message=FALSE}
 base_cb <- 
   digeoqR::prepara_bases(dir_bol, 
@@ -1190,8 +1214,7 @@ rmarkdown::paged_table(dados_cb, options = list(rows.print = 9, cols.print = 5))
 
 #### Enriquecimento das bases com feições espaciais (geologia) {#enriquecimento-das-bases-com-feições-espaciais-geologia}
 
-::: {.incremental}
-
+::: incremental
 \
 
 -   Extrai dados xml cores da layer (QGIS)\
@@ -1201,9 +1224,11 @@ rmarkdown::paged_table(dados_cb, options = list(rows.print = 9, cols.print = 5))
 -   Mapa geológico simplificado\
 -   Faz a intersecção entre bacias e geologia
 :::
+
 ## 
 
 ##### Extrai dados xml cores da layer (QGIS)
+
 **Descrição**: Extrai dados da legenda de um arquivo de estilo xml. No QGIS use a ferramenta Create style database from project para gerar o XML, da feição pretendida, aqui usei usei o do mapa geológico do Brasil ao milhonésimo de 2014 do SGB-CPRM.\
 \
 
@@ -1231,6 +1256,7 @@ feicao_in <- "geologia_br"; feicao_out <- "geologia_area";
 dir_in <- "inputs/campo/"; area <- "area_srtm"
 chave <- "RANGE"
 ```
+
 **Descrição**: Ferramenta que recorta a shape de uma feição (geologia, solo...) pelo limite da área. Usei o mapa geológico do Brasil ao milhonésimo do SGB.\
 \
 
@@ -1247,6 +1273,7 @@ geologia <-
 ## 
 
 ##### Prepara a legenda da geologia
+
 **Descrição**: Este processamento usa a shape e xml do mapa das unidades litoestratigráficas do Brasil (2014) obtidos do GEOSGB (SGB-CPRM).\
 \
 
@@ -1289,6 +1316,7 @@ nome_xml <- "geologia"
 classe_am <- 2
 tipo_leg <- 2
 ```
+
 **Decrição**: Cada bacia é recortada pelos polígonos da geologia. Esta função está configurada para a shape do mapa geológico ao milhonésimo 2014 do SGB-CPRM.\
 \
 
@@ -1386,6 +1414,7 @@ lito_bacia <- lito_bacia_sc
 leg <- leg2
 base <- base_sc
 ```
+
 **Descrição**: Testes de normalidade e de comparação das amostras\
 \
 
@@ -1423,7 +1452,8 @@ rmarkdown::paged_table(teste_lf,
 ## 
 
 ##### Teste Wilcoxon
-**Descrição**: Visual do Teste Wilcoxon compara as análises de cada elemento agrupados por unidades litológicas. Apresenta um gráfico onde a cor vermelha indica p-value <0,05.
+
+**Descrição**: Visual do Teste Wilcoxon compara as análises de cada elemento agrupados por unidades litológicas. Apresenta um gráfico onde a cor vermelha indica p-value \<0,05.
 
 ```{r prep_vis_wilcoxon, results='hide'}
 vis_wilcolxon <- 
@@ -1445,13 +1475,14 @@ gridExtra::grid.arrange(grobs = vis_wilcolxon[c(1,length(vis_wilcolxon))],
 ## 
 
 ##### QAQC das duplicatas de campo
-{#qaqc-das-duplicatas-de-campo-e%20replicatas-de-laboratório}
 
+{#qaqc-das-duplicatas-de-campo-e%20replicatas-de-laboratório}
 
 ```{r, echo=FALSE, eval=TRUE}
 base <- base_sc
 tipo_am = 1
 ```
+
 **Descrição**: Controle de qualidade analítico e amostral. Tipos de amostragem: 1 = duplicata de campo 2 = replicata de laboratório.\
 
 \
@@ -1522,6 +1553,7 @@ rotulo_lito <- lito_bacia_sc[[2]]
 base <- base_sc
 tipo_proc <- 1
 ```
+
 **Descrição**: Gera planilhas com os principais parâmetros estatísticos em dois modos de processamento: 1 = Todas amostras e 2 = Agrupadas por unidades.\
 \
 
@@ -1732,8 +1764,28 @@ Ainda faltam converter para o pacote digeoqR as funções de:
 
 ## 3. Fechamento
 
--   Minhas impressões do uso do R.
+-   Considerações Finais.
 
+##
 -   Qual os próximos passos?
 
+##
 -   Feedback dos participantes.
+
+
+
+##  {background-color="black" background-image="images/fundo_azul.png"}
+
+\
+\
+\
+\
+\
+
+
+![](images/logoSGB.png){fig-align="center"}
+
+::: {style="font-size: 1.5em; text-align: center"}
+OBRIGADA
+
+:::
