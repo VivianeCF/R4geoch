@@ -359,7 +359,7 @@ X <- c(1, 8, 19)
 
 Existem diferentes maneiras de programar. É importante ser cuidadoso na maneira de escrever seu código para que seja fácil replicar e ler o código.\
 
-```{r, eval=FALSE, echo=TRUE, `code-line-numbers`="2|5-8"}
+```{r, eval=FALSE, echo=TRUE, `code-line-numbers`="2-2|4-8"}
 ## Mal escrito
 media<-function (x){n<-length(x);sum(x)/n}
 
@@ -701,7 +701,7 @@ rnorm(8)
 
 \
 
--   A principal diferença entre um erro e um aviso é que o erro não produz um nenhum resultado, enquanto um aviso o faz.\
+-   A principal diferença entre um erro e um aviso é que o erro não produz nenhum resultado, enquanto um aviso o faz.\
 :::
 
 ## 
