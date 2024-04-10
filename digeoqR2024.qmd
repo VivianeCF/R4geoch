@@ -1330,11 +1330,11 @@ rmarkdown::paged_table(data.frame(Elementos = elem_val))
 
 ## 
 
-#### Número de dados válidos por analito
+#### Número de dados <LD por analito
 
 ```{r n_validos, echo = FALSE}
 nmld <- res_val[[1]][, c("elementos", "nneg")]
-colnames(nmld) <- c("Analito", "N. Válidos")
+colnames(nmld) <- c("Analito", "N. <LD")
 rmarkdown::paged_table(nmld, 
                        options = list(rows.print = 9))
 ```
