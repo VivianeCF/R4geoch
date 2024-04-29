@@ -1260,6 +1260,7 @@ feicao_rec <- geologia
 nome_xml <- "geologia"
 classe_am <- 2
 tipo_leg <- 2
+lista_legenda <- lista_legenda
 ```
 
 **Decrição**: Cada bacia é recortada pelos polígonos da geologia. Esta função está configurada para a shape do mapa geológico ao milhonésimo 2014 do SGB-CPRM.\
@@ -1272,7 +1273,8 @@ lito_bacia_sc <-
                              bases_model,
                              bacias, 
                              feicao_rec,
-                             tipo_leg, 
+                             tipo_leg,
+                             lista_legenda,
                              estacoes,
                              classe_am, 
                              nome_xml)
