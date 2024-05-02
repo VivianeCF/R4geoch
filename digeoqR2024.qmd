@@ -896,6 +896,8 @@ modela_bacias_plan <-
                          gera_est, 
                          ex_campo, 
                          classe_am, 
+                         fonte_shp, 
+                         arquivo_shp, 
                          bacia_minima, 
                          bacia_maxima, 
                          threshold, 
@@ -970,6 +972,7 @@ ex_campo <-
 ```{r, echo=FALSE, eval=TRUE}
 fase <- 2
 classe_am <- 2
+fonte_shp <- FALSE
 ```
 
 ```{r sed_cor}
@@ -981,13 +984,15 @@ modela_bacias_sc <-
                          gera_est, 
                          ex_campo, 
                          classe_am, 
+                         fonte_shp, 
+                         arquivo_shp, 
                          bacia_minima, 
                          bacia_maxima, 
                          threshold, 
                          snap_dist, 
                          min_length, 
                          max_ordem, 
-                         dir_out, 
+                         dir_out,
                          wbt_wd)
 ```
 
@@ -1008,7 +1013,9 @@ modela_bacias_cb <-
                          bases_model, 
                          gera_est, 
                          ex_campo, 
-                         classe_am, 
+                         classe_am,
+                         fonte_shp,
+                         arquivo_shp,
                          bacia_minima, 
                          bacia_maxima, 
                          threshold, 
@@ -1268,15 +1275,15 @@ lista_legenda <- lista_legenda
 
 ```{r inters_bacias, results='hide'}
 lito_bacia_sc <-
-  digeoqR::intersecta_bacias(dir_in,
+  digeoqR::intersecta_bacias(dir_in, 
                              dir_out, 
                              bases_model,
-                             bacias, 
+                             bacias,
                              feicao_rec,
-                             tipo_leg,
                              lista_legenda,
-                             estacoes,
-                             classe_am, 
+                             tipo_leg,
+                             estacoes, 
+                             classe_am,
                              nome_xml)
    
 ```
